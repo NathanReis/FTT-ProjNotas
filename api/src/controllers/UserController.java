@@ -1,23 +1,67 @@
 package controllers;
 
-import models.UserModel;
+import java.util.List;
 
-public class UserController extends Controller {
-	public UserController() {
-		super();
+import models.UserModel;
+import repositories.Connection;
+import repositories.UserRepository;
+
+public class UserController {
+	private UserRepository userRepository = new UserRepository();
+	
+	public UserModel create(UserModel userModel) {
+		userModel = this.userRepository.save(userModel, 0);
+		
+		Connection.closeInstancie();
+		
+		return userModel;
 	}
 	
-	public void create(UserModel userModel) {
-		_em.getTransaction().begin();
+	public void delete(int id) {
+		UserModel userModel = userRepository.findFirst(UserModel.class, "id", id);
 		
-		try {
-			_em.persist(userModel);
-			
-			_em.getTransaction().commit();
-		} catch(Exception exception) {
-			_em.getTransaction().rollback();
-		}
+		this.userRepository.delete(userModel);
 		
-		_emf.close();
+		Connection.closeInstancie();
+	}
+	
+	public List<UserModel> findAll() {
+		List<UserModel> userModels = this.userRepository.findAll(UserModel.class);
+		
+		Connection.closeInstancie();
+		
+		return userModels;
+	}
+	
+	public UserModel findFirst(String field, double value) {
+		UserModel userModel = this.userRepository.findFirst(UserModel.class, field, value);
+		
+		Connection.closeInstancie();
+		
+		return userModel;
+	}
+	
+	public UserModel findFirst(String field, int value) {
+		UserModel userModel = this.userRepository.findFirst(UserModel.class, field, value);
+		
+		Connection.closeInstancie();
+		
+		return userModel;
+	}
+	
+	public UserModel findFirst(String field, String value) {
+		UserModel userModel = this.userRepository.findFirst(UserModel.class, field, value);
+		
+		Connection.closeInstancie();
+		
+		return userModel;
+	}
+	
+	public UserModel update(UserModel userModel) {
+		userModel = this.userRepository.save(userModel, userModel.getId());
+		
+		Connection.closeInstancie();
+		
+		return userModel;
 	}
 }

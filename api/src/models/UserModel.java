@@ -10,7 +10,7 @@ import jdk.jfr.Unsigned;
 
 @Entity
 @Table(name="tbUsers")
-public class UserModel {
+public class UserModel extends Model {
 	@Id
 	@GeneratedValue
 	@Unsigned

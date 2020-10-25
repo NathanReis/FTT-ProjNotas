@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS `projnotas`;
 
 CREATE DATABASE `projnotas`;
 
+USE `projnotas`;
+
 DROP USER IF EXISTS 'es2lp3n2'@'localhost';
 FLUSH PRIVILEGES;
 
