@@ -11,24 +11,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import controllers.UserController;
+import controllers.TeachingInstitutionController;
 import helpers.JsonHelper;
-import models.UserModel;
+import models.TeachingInstitutionModel;
 
 /**
  * Servlet implementation class UserAPI
  */
-@WebServlet("/user/*")
-public class UserAPI extends HttpServlet {
+@WebServlet("/teaching-institution/*")
+public class TeachingInstitutionAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private Gson gson = new Gson();
-	private UserController userController = new UserController(); 
+	private TeachingInstitutionController teachingInstitutionController = new TeachingInstitutionController(); 
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserAPI() {
+    public TeachingInstitutionAPI() {
         super();
     }
 
@@ -41,36 +41,35 @@ public class UserAPI extends HttpServlet {
 		response.setContentType("application/json");
 		
 		try {
-			String parameters = request.getRequestURI().replaceFirst("^.*/user/*", "");
+			String parameters = request.getRequestURI().replaceFirst("^.*/teaching-institution/*", "");
 			
 			if(parameters.isBlank()) {
-				// /user
+				// /teaching-institution
 				
-				List<UserModel> userModels = this.userController.findAll();
+				List<TeachingInstitutionModel> teachingInstitutionModels = this.teachingInstitutionController.findAll(); 
 				
 				response
 					.getWriter()
-					.append(this.gson.toJson(userModels));
+					.append(this.gson.toJson(teachingInstitutionModels));
 			} else if(parameters.matches("^\\d+$")) {
-				// /user/1
+				// /teaching-institution/1
 				
-				UserModel userModel = this.userController.findFirst("id", Integer.parseInt(parameters));
+				TeachingInstitutionModel teachingInstitutionModel = this.teachingInstitutionController.findFirst("id", Integer.parseInt(parameters));
 				
 				response
 					.getWriter()
-					.append(this.gson.toJson(userModel));
+					.append(this.gson.toJson(teachingInstitutionModel));
 			} else if(parameters.matches("^.+/.+$")) {
-				// /user/id/1
+				// /teaching-institution/id/1
 				
 				// FUNCIONA APENAS QUANDO SEGUNDO PARÂMETRO É STRING NO BANCO
 				
 				String valuesParameters[] = parameters.split("/");
-				UserModel userModel = this.userController.findFirst(valuesParameters[0], valuesParameters[1]);
+				TeachingInstitutionModel teachingInstitutionModel = this.teachingInstitutionController.findFirst(valuesParameters[0], valuesParameters[1]);
 				
 				response
 					.getWriter()
-					.append(this.gson.toJson(userModel))
-					.append(" " + parameters + " ");
+					.append(this.gson.toJson(teachingInstitutionModel));
 			} else {
 				response
 					.getWriter()
@@ -95,13 +94,13 @@ public class UserAPI extends HttpServlet {
 		
 		try {
 			String stringJson = JsonHelper.getJsonRequest(request);
-			UserModel userModel = this.gson.fromJson(stringJson, UserModel.class);
+			TeachingInstitutionModel teachingInstitutionModel = this.gson.fromJson(stringJson, TeachingInstitutionModel.class);
 			
-			userModel = this.userController.create(userModel);
+			teachingInstitutionModel = this.teachingInstitutionController.create(teachingInstitutionModel);
 			
 			response
 				.getWriter()
-				.append(this.gson.toJson(userModel));
+				.append(this.gson.toJson(teachingInstitutionModel));
 		} catch(Exception exception) {
 			response
 				.getWriter()
@@ -119,13 +118,13 @@ public class UserAPI extends HttpServlet {
 		
 		try {
 			String stringJson = JsonHelper.getJsonRequest(request);
-			UserModel userModel = this.gson.fromJson(stringJson, UserModel.class);
+			TeachingInstitutionModel teachingInstitutionModel = this.gson.fromJson(stringJson, TeachingInstitutionModel.class);
 			
-			userModel = this.userController.update(userModel);
+			teachingInstitutionModel = this.teachingInstitutionController.update(teachingInstitutionModel);
 			
 			response
 				.getWriter()
-				.append(this.gson.toJson(userModel));
+				.append(this.gson.toJson(teachingInstitutionModel));
 		} catch(Exception exception) {
 			response
 				.getWriter()
@@ -141,8 +140,8 @@ public class UserAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		if(!request.getRequestURI().matches("^.*/user/\\d+$")) {
-			// ! /user/1
+		if(!request.getRequestURI().matches("^.*/teaching-institution/\\d+$")) {
+			// ! /teaching-institution/1
 			
 			response
 				.getWriter()
@@ -152,8 +151,8 @@ public class UserAPI extends HttpServlet {
 		}
 		
 		try {
-			int id = Integer.parseInt(request.getRequestURI().replaceFirst(".*/user/+", ""));
-			this.userController.delete(id);
+			int id = Integer.parseInt(request.getRequestURI().replaceFirst(".*/teaching-institution/+", ""));
+			this.teachingInstitutionController.delete(id);
 			
 			response
 				.getWriter()

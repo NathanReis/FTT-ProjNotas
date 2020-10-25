@@ -3,16 +3,27 @@ package models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import jdk.jfr.Unsigned;
 
 @Entity
-@Table(name="tbUsers")
+@Table(
+	name = "tbUsers",
+	uniqueConstraints = @UniqueConstraint(
+		columnNames = {
+			"userName"
+		}
+	)
+)
 public class UserModel extends Model {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Unsigned
 	protected int id;
 	@Column
@@ -21,6 +32,11 @@ public class UserModel extends Model {
 	private String password;
 	@Column
 	private String type;
+	@ManyToOne
+	@JoinColumn(
+		name = "idTeachingInstitution"
+	)
+	private TeachingInstitutionModel teachingInstitution; 
 	
 	public int getId() {
 		return this.id;
@@ -52,5 +68,13 @@ public class UserModel extends Model {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public TeachingInstitutionModel getTeachingInstitution() {
+		return this.teachingInstitution;
+	}
+
+	public void setType(TeachingInstitutionModel teachingInstitution) {
+		this.teachingInstitution = teachingInstitution;
 	}
 }

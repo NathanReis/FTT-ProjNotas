@@ -18,7 +18,7 @@ public class UserController {
 	}
 	
 	public void delete(int id) {
-		UserModel userModel = userRepository.findFirst(UserModel.class, "id", id);
+		UserModel userModel = this.userRepository.findFirst(UserModel.class, "id", id);
 		
 		this.userRepository.delete(userModel);
 		
