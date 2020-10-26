@@ -1,0 +1,11 @@
+#homepage-container{
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    
+}
+
+#homepage-container .side-menu{
+    width: 20%;
+    background-color: gray;
+}
