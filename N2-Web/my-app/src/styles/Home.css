@@ -1,11 +1,65 @@
+
 #homepage-container{
     display: flex;
     width: 100vw;
     height: 100vh;
-    
 }
 
 #homepage-container .side-menu{
-    width: 20%;
-    background-color: gray;
+    width: 30%;
+    background-color: rgb(27 33 45);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+.side-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50%;
+}
+.side-container a{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    margin-top: 5px;
+}
+.side-container h2{
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 10%;
+}
+#homepage-container .side-menu img{
+    border-radius: 50%;
+    width: 60%;
+    margin-bottom: 30px;
+}
+#homepage-container{
+    background: cornflowerblue;
+    font-family: 'Roboto Slab', serif;
+}
+#homepage-container .home-container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+#homepage-container .home-container h1{
+    margin-top: 5%;
+    font-size: 50px;
+}
+#homepage-container .home-container .image-container{
+    margin-top: 10%;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+#homepage-container .home-container .image-container img{
+    width: 50%;
+    margin-bottom: 5%;
 }
