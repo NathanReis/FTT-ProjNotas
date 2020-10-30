@@ -2,6 +2,7 @@ package models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,8 @@ public class UserModel extends Model {
 	private String type;
 	@ManyToOne
 	@JoinColumn(
-		name = "idTeachingInstitution"
+		name = "idTeachingInstitution",
+		foreignKey = @ForeignKey(name = "fk_tbUsers_idTeachingInstitution")
 	)
 	private TeachingInstitutionModel teachingInstitution; 
 	
