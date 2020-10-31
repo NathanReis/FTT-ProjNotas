@@ -12,7 +12,7 @@ public class TeachingInstitutionController {
 	public TeachingInstitutionModel create(TeachingInstitutionModel teachingInstitutionModel) {
 		teachingInstitutionModel = this.teachingInstitutionRepository.save(teachingInstitutionModel, 0);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return teachingInstitutionModel;
 	}
@@ -22,13 +22,13 @@ public class TeachingInstitutionController {
 		
 		this.teachingInstitutionRepository.delete(teachingInstitutionModel);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 	}
 	
 	public List<TeachingInstitutionModel> findAll() {
 		List<TeachingInstitutionModel> teachingInstitutionModels = this.teachingInstitutionRepository.findAll(TeachingInstitutionModel.class);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return teachingInstitutionModels;
 	}
@@ -36,7 +36,7 @@ public class TeachingInstitutionController {
 	public TeachingInstitutionModel findFirst(String field, double value) {
 		TeachingInstitutionModel teachingInstitutionModel = this.teachingInstitutionRepository.findFirst(TeachingInstitutionModel.class, field, value);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return teachingInstitutionModel;
 	}
@@ -44,7 +44,7 @@ public class TeachingInstitutionController {
 	public TeachingInstitutionModel findFirst(String field, int value) {
 		TeachingInstitutionModel teachingInstitutionModel = this.teachingInstitutionRepository.findFirst(TeachingInstitutionModel.class, field, value);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return teachingInstitutionModel;
 	}
@@ -52,7 +52,7 @@ public class TeachingInstitutionController {
 	public TeachingInstitutionModel findFirst(String field, String value) {
 		TeachingInstitutionModel teachingInstitutionModel = this.teachingInstitutionRepository.findFirst(TeachingInstitutionModel.class, field, value);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return teachingInstitutionModel;
 	}
@@ -60,7 +60,7 @@ public class TeachingInstitutionController {
 	public TeachingInstitutionModel update(TeachingInstitutionModel teachingInstitutionModel) {
 		teachingInstitutionModel = this.teachingInstitutionRepository.save(teachingInstitutionModel, teachingInstitutionModel.getId());
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return teachingInstitutionModel;
 	}

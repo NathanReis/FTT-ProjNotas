@@ -15,7 +15,7 @@ abstract public class Repository<TEntity extends Model> {
 		sql       += "FROM " + classEntity.getName() + " AS entity ";
 		sql       += "WHERE " + field + " = :" + field;
 		
-		Query query = Connection.getInstancie().createQuery(sql);
+		Query query = Connection.getInstance().createQuery(sql);
 		query.setParameter(field, value);
 		query.setMaxResults(1);
 		
@@ -33,7 +33,7 @@ abstract public class Repository<TEntity extends Model> {
 		sql       += "FROM " + classEntity.getName() + " AS entity ";
 		sql       += "WHERE " + field + " = :" + field;
 		
-		Query query = Connection.getInstancie().createQuery(sql);
+		Query query = Connection.getInstance().createQuery(sql);
 		query.setParameter(field, value);
 		query.setMaxResults(1);
 		
@@ -51,7 +51,7 @@ abstract public class Repository<TEntity extends Model> {
 		sql       += "FROM " + classEntity.getName() + " AS entity ";
 		sql       += "WHERE " + field + " = :" + field;
 		
-		Query query = Connection.getInstancie().createQuery(sql);
+		Query query = Connection.getInstance().createQuery(sql);
 		query.setParameter(field, value);
 		query.setMaxResults(1);
 		
@@ -65,14 +65,14 @@ abstract public class Repository<TEntity extends Model> {
 	}
 	
 	public void delete(TEntity entity) {
-		Connection.getInstancie().getTransaction().begin();
+		Connection.getInstance().getTransaction().begin();
 		
 		try {
-			Connection.getInstancie().remove(entity);
+			Connection.getInstance().remove(entity);
 			
-			Connection.getInstancie().getTransaction().commit();
+			Connection.getInstance().getTransaction().commit();
 		} catch(Exception exception) {
-			Connection.getInstancie().getTransaction().rollback();
+			Connection.getInstance().getTransaction().rollback();
 		}
 	}
 
@@ -80,25 +80,25 @@ abstract public class Repository<TEntity extends Model> {
 		String sql = "SELECT entity ";
 		sql       += "FROM " + classEntity.getName() + " AS entity";
 		
-		Query query = Connection.getInstancie().createQuery(sql);
+		Query query = Connection.getInstance().createQuery(sql);
 		List<TEntity> result = query.getResultList();
 		
 		return result;
 	}
 
 	public TEntity save(TEntity entity, int id) {
-		Connection.getInstancie().getTransaction().begin();
+		Connection.getInstance().getTransaction().begin();
 		
 		try {
 			if(id == 0) {
-				Connection.getInstancie().persist(entity);
+				Connection.getInstance().persist(entity);
 			} else {
-				Connection.getInstancie().merge(entity);
+				Connection.getInstance().merge(entity);
 			}
 			
-			Connection.getInstancie().getTransaction().commit();
+			Connection.getInstance().getTransaction().commit();
 		} catch(Exception exception) {
-			Connection.getInstancie().getTransaction().rollback();
+			Connection.getInstance().getTransaction().rollback();
 		}
 		
 		return entity;

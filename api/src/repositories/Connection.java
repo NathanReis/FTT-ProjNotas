@@ -8,7 +8,7 @@ abstract public class Connection {
 	private static EntityManagerFactory emf = null;
 	private static EntityManager em = null;
 	
-	public static EntityManager getInstancie() {
+	public static EntityManager getInstance() {
 		if(em == null) {
 			emf = Persistence.createEntityManagerFactory("projnotas");
 			em = emf.createEntityManager();
@@ -17,7 +17,7 @@ abstract public class Connection {
 		return em;
 	}
 	
-	public static void closeInstancie() {
+	public static void closeInstance() {
 		if(em != null) {
 			em.close();
 			emf.close();

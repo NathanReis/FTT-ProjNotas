@@ -12,7 +12,7 @@ public class UserController {
 	public UserModel create(UserModel userModel) {
 		userModel = this.userRepository.save(userModel, 0);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return userModel;
 	}
@@ -22,13 +22,13 @@ public class UserController {
 		
 		this.userRepository.delete(userModel);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 	}
 	
 	public List<UserModel> findAll() {
 		List<UserModel> userModels = this.userRepository.findAll(UserModel.class);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return userModels;
 	}
@@ -36,7 +36,7 @@ public class UserController {
 	public UserModel findFirst(String field, double value) {
 		UserModel userModel = this.userRepository.findFirst(UserModel.class, field, value);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return userModel;
 	}
@@ -44,7 +44,7 @@ public class UserController {
 	public UserModel findFirst(String field, int value) {
 		UserModel userModel = this.userRepository.findFirst(UserModel.class, field, value);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return userModel;
 	}
@@ -52,7 +52,7 @@ public class UserController {
 	public UserModel findFirst(String field, String value) {
 		UserModel userModel = this.userRepository.findFirst(UserModel.class, field, value);
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return userModel;
 	}
@@ -60,7 +60,7 @@ public class UserController {
 	public UserModel update(UserModel userModel) {
 		userModel = this.userRepository.save(userModel, userModel.getId());
 		
-		Connection.closeInstancie();
+		Connection.closeInstance();
 		
 		return userModel;
 	}
