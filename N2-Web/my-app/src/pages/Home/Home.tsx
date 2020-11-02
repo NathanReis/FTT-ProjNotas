@@ -12,7 +12,7 @@ const Home = () => {
                 <div className="side-container">
                     <img alt="user" src={User} />
                     <h2>Bem vindo usuário</h2>
-                    <Link to="">Escolher matérias</Link>
+                    <Link to="/subjects">Escolher matérias</Link>
                     <Link to="">Cadastrar notas</Link>
                     <Link to="">Ver médias</Link>
                     <Link to="">Editar conta</Link>
