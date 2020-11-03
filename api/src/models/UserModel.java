@@ -1,13 +1,9 @@
 package models;
 
 public class UserModel extends Model {
-	
 	private String userName;
-	
 	private String password;
-	
 	private String type;
-	
 	private TeachingInstitutionModel teachingInstitution; 
 	
 	public String getUserName() {
@@ -41,5 +37,4 @@ public class UserModel extends Model {
 	public void setTeachingInstitution(TeachingInstitutionModel teachingInstitution) {
 		this.teachingInstitution = teachingInstitution;
 	}
-	
 }

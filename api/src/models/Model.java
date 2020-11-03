@@ -1,7 +1,6 @@
 package models;
 
 public abstract class Model {
-	
 	protected int id;
 	
 	public int getId() {
@@ -11,6 +10,4 @@ public abstract class Model {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 }
-

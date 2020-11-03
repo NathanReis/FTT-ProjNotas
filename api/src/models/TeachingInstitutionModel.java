@@ -1,7 +1,6 @@
 package models;
 
 public class TeachingInstitutionModel extends Model {
-	
 	private String name;
 	
 	public String getName() {
@@ -12,4 +11,3 @@ public class TeachingInstitutionModel extends Model {
 		this.name = name;
 	}
 }
-

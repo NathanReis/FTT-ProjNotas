@@ -1,123 +1,103 @@
 package controllers;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import models.Model;
-import models.UserModel;
 import repositories.ConexaoBd;
 import repositories.Repository;
 
-abstract public class Controller<T extends Model>{
+abstract public class Controller<T extends Model> {
+	protected Repository<T> repository;
 	
-	protected Repository repositorio;
-	
-	Controller(Repository repositorio){
-		this.repositorio = repositorio;
+	public Controller(Repository<T> repository) {
+		this.repository = repository;
 	}
 	
-	public void create(T entModel) {
+	public void create(T model) {
 		try {
+			int id = this.repository.create(model);
 			
-			int id = this.repositorio.create(entModel);
-			entModel.setId(id);
+			model.setId(id);
+			
 			ConexaoBd.fecharConexao();
-			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	public void delete(int id) {
-		
 		try {
+			this.repository.delete(id);
 			
-			this.repositorio.delete(id);
 			ConexaoBd.fecharConexao();
-			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
-	public List<T> findAll() {
-		
-		List<T> entModels = null;
+	public ArrayList<T> findAll() {
+		ArrayList<T> models = null;
 		
 		try {
+			models = this.repository.findAll();
 			
-			entModels = this.repositorio.findAll();
 			ConexaoBd.fecharConexao();
-			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		return entModels;
+		return models;
 	}
 	
-	public T findFirst( String field, double value) {
-		
-		T entModel = null;
+	public T findFirst(String field, double value) {
+		T model = null;
 		
 		try {
+			model = (T)this.repository.findFirst(field, value);
 			
-			entModel = (T) this.repositorio.findFirst(field, value);
 			ConexaoBd.fecharConexao();
-			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		return entModel;
-	
+		return model;
 	}
 	
-	public T findFirst( String field, int value) {
-		
-		T entModel = null;
+	public T findFirst(String field, int value) {
+		T model = null;
 		
 		try {
+			model = (T)this.repository.findFirst(field, value);
 			
-			entModel = (T) this.repositorio.findFirst(field, value);
 			ConexaoBd.fecharConexao();
-			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		return entModel;
-	
+		return model;
 	}
 	
-	public T findFirst( String field, String value) {
-		
-		T entModel = null;
+	public T findFirst(String field, String value) {
+		T model = null;
 		
 		try {
+			model = (T)this.repository.findFirst(field, value);
 			
-			entModel = (T) this.repositorio.findFirst(field, value);
 			ConexaoBd.fecharConexao();
-			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		return entModel;
-	
+		return model;
 	}
 	
-	public void update(T entModel) {
+	public void update(T model) {
 		try {
+			this.repository.update(model);
 			
-			this.repositorio.update(entModel);
 			ConexaoBd.fecharConexao();
-			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 }
-

@@ -1,48 +1,9 @@
 package models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import jdk.jfr.Unsigned;
-
-@Entity
-@Table(
-	name = "tbSubjectsXTeachingInstitutions"
-)
-public class SubjectXTeachingInstitutionModel {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Unsigned
-	protected int id;
-	@ManyToOne
-	@JoinColumn(
-		name = "idSubject",
-		foreignKey = @ForeignKey(name = "fk_tbSubjectsXTeachingInstitutions_idSubject")
-	)
+public class SubjectXTeachingInstitutionModel extends Model {
 	private SubjectModel subject;
-	@ManyToOne
-	@JoinColumn(
-		name = "idTeachingInstitution",
-		foreignKey = @ForeignKey(name = "fk_tbSubjectsXTeachingInstitutions_idTeachingInstitution")
-	)
 	private TeachingInstitutionModel teachingInstitution;
-	@Column
 	private String active;
-	
-	public int getId() {
-		return this.id;
-	}
-	
-	public void setId(int id) {
-		this.id = id;
-	}
 	
 	public SubjectModel getSubject() {
 		return this.subject;
