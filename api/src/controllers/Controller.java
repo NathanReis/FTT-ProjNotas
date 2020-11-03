@@ -3,7 +3,7 @@ package controllers;
 import java.util.ArrayList;
 
 import models.Model;
-import repositories.ConexaoBd;
+import repositories.ConnectionDB;
 import repositories.Repository;
 
 abstract public class Controller<T extends Model> {
@@ -19,7 +19,7 @@ abstract public class Controller<T extends Model> {
 			
 			model.setId(id);
 			
-			ConexaoBd.fecharConexao();
+			ConnectionDB.closeInstance();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -29,7 +29,7 @@ abstract public class Controller<T extends Model> {
 		try {
 			this.repository.delete(id);
 			
-			ConexaoBd.fecharConexao();
+			ConnectionDB.closeInstance();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -41,7 +41,7 @@ abstract public class Controller<T extends Model> {
 		try {
 			models = this.repository.findAll();
 			
-			ConexaoBd.fecharConexao();
+			ConnectionDB.closeInstance();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -55,7 +55,7 @@ abstract public class Controller<T extends Model> {
 		try {
 			model = (T)this.repository.findFirst(field, value);
 			
-			ConexaoBd.fecharConexao();
+			ConnectionDB.closeInstance();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -69,7 +69,7 @@ abstract public class Controller<T extends Model> {
 		try {
 			model = (T)this.repository.findFirst(field, value);
 			
-			ConexaoBd.fecharConexao();
+			ConnectionDB.closeInstance();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -83,7 +83,7 @@ abstract public class Controller<T extends Model> {
 		try {
 			model = (T)this.repository.findFirst(field, value);
 			
-			ConexaoBd.fecharConexao();
+			ConnectionDB.closeInstance();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -95,7 +95,7 @@ abstract public class Controller<T extends Model> {
 		try {
 			this.repository.update(model);
 			
-			ConexaoBd.fecharConexao();
+			ConnectionDB.closeInstance();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

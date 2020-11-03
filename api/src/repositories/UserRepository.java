@@ -14,13 +14,13 @@ public class UserRepository extends Repository<UserModel> {
 	}
 	
 	@Override
-	public int create(UserModel user) throws SQLException {
+	public int create(UserModel user) throws SQLException, ClassNotFoundException {
 		String sql = "INSERT INTO " + this.table + " ";
 		sql       += "  (password, userName, idTeachingInstitution, type) ";
 		sql       += "VALUES ";
 		sql       += "  (?, ?, ?, ?);";
 		
-		try(PreparedStatement stmt = ConexaoBd.getConexao().prepareStatement(sql)) {
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
 			stmt.setString(1,user.getPassword());
 			stmt.setString(2, user.getUserName());
 			stmt.setInt(3, user.getTeachingInstitution().getId());
@@ -33,12 +33,12 @@ public class UserRepository extends Repository<UserModel> {
 	} 
 	
 	@Override
-	public ArrayList<UserModel> findAll() throws SQLException {
+	public ArrayList<UserModel> findAll() throws SQLException, ClassNotFoundException {
 		String sql = "SELECT * FROM " + this.table + ";";
 		
 		ArrayList<UserModel> userModels = new ArrayList<UserModel>();
 		
-		try(PreparedStatement stmt = ConexaoBd.getConexao().prepareStatement(sql)) {
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
@@ -61,7 +61,7 @@ public class UserRepository extends Repository<UserModel> {
 	
 	
 	@Override
-	public UserModel findFirst(String field, double value) throws SQLException {
+	public UserModel findFirst(String field, double value) throws SQLException, ClassNotFoundException {
 		String sql = "SELECT * ";
 		sql       += "FROM " + this.table + " ";
 		sql       += "WHERE " + field + " = ? ";
@@ -69,7 +69,7 @@ public class UserRepository extends Repository<UserModel> {
 		
 		UserModel userModel = null;
 		
-		try(PreparedStatement stmt = ConexaoBd.getConexao().prepareStatement(sql)) {
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
 			stmt.setDouble(1, value);
 			
 			ResultSet rs = stmt.executeQuery();
@@ -91,7 +91,7 @@ public class UserRepository extends Repository<UserModel> {
 	}
 	
 	@Override
-	public UserModel findFirst(String field, int value) throws SQLException {
+	public UserModel findFirst(String field, int value) throws SQLException, ClassNotFoundException {
 		String sql = "SELECT * ";
 		sql       += "FROM " + this.table + " ";
 		sql       += "WHERE " + field + " = ? ";
@@ -99,7 +99,7 @@ public class UserRepository extends Repository<UserModel> {
 		
 		UserModel userModel = null;
 		
-		try(PreparedStatement stmt = ConexaoBd.getConexao().prepareStatement(sql)) {
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
 			stmt.setInt(1, value);
 			
 			ResultSet rs = stmt.executeQuery();
@@ -121,7 +121,7 @@ public class UserRepository extends Repository<UserModel> {
 	}
 	
 	@Override
-	public UserModel findFirst(String field, String value) throws SQLException {
+	public UserModel findFirst(String field, String value) throws SQLException, ClassNotFoundException {
 		String sql = "SELECT * ";
 		sql       += "FROM " + this.table + " ";
 		sql       += "WHERE " + field + " = ? ";
@@ -129,7 +129,7 @@ public class UserRepository extends Repository<UserModel> {
 		
 		UserModel userModel = null;
 		
-		try(PreparedStatement stmt = ConexaoBd.getConexao().prepareStatement(sql)) {
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
 			stmt.setString(1, value);
 			
 			ResultSet rs = stmt.executeQuery();
@@ -151,18 +151,17 @@ public class UserRepository extends Repository<UserModel> {
 	}
 	
 	@Override
-	public void update(UserModel user) throws SQLException {
+	public void update(UserModel user) throws SQLException, ClassNotFoundException {
 		String sql = "UPDATE " + this.table + " ";
 		sql       += "SET ";
-		sql       += "  password = ?, idTeachingInstitution = ?, type = ? ";
+		sql       += "  password = ?, idTeachingInstitution = ? ";
 		sql       += "WHERE ";
 		sql       += "  id = ?;";
 		
-		try(PreparedStatement stmt = ConexaoBd.getConexao().prepareStatement(sql)) {
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
 			stmt.setString(1,user.getPassword());
 			stmt.setInt(2, user.getTeachingInstitution().getId());
-			stmt.setString(3, user.getType());
-			stmt.setInt(4, user.getId());
+			stmt.setInt(3, user.getId());
 			
 			stmt.executeUpdate();
 		}
