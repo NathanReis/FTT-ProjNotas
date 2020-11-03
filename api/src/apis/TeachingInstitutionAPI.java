@@ -59,18 +59,7 @@ public class TeachingInstitutionAPI extends HttpServlet {
 				response
 					.getWriter()
 					.append(this.gson.toJson(teachingInstitutionModel));
-			} else if(parameters.matches("^.+/.+$")) {
-				// /teaching-institution/id/1
-				
-				// FUNCIONA APENAS QUANDO SEGUNDO PARÂMETRO É STRING NO BANCO
-				
-				String valuesParameters[] = parameters.split("/");
-				TeachingInstitutionModel teachingInstitutionModel = this.teachingInstitutionController.findFirst(valuesParameters[0], valuesParameters[1]);
-				
-				response
-					.getWriter()
-					.append(this.gson.toJson(teachingInstitutionModel));
-			} else {
+			}  else {
 				response
 					.getWriter()
 					.append("INVALID ROUTE GET");
@@ -96,7 +85,7 @@ public class TeachingInstitutionAPI extends HttpServlet {
 			String stringJson = JsonHelper.getJsonRequest(request);
 			TeachingInstitutionModel teachingInstitutionModel = this.gson.fromJson(stringJson, TeachingInstitutionModel.class);
 			
-			teachingInstitutionModel = this.teachingInstitutionController.create(teachingInstitutionModel);
+			this.teachingInstitutionController.create(teachingInstitutionModel);
 			
 			response
 				.getWriter()
@@ -120,7 +109,7 @@ public class TeachingInstitutionAPI extends HttpServlet {
 			String stringJson = JsonHelper.getJsonRequest(request);
 			TeachingInstitutionModel teachingInstitutionModel = this.gson.fromJson(stringJson, TeachingInstitutionModel.class);
 			
-			teachingInstitutionModel = this.teachingInstitutionController.update(teachingInstitutionModel);
+			this.teachingInstitutionController.update(teachingInstitutionModel);
 			
 			response
 				.getWriter()

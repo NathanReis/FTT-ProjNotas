@@ -59,18 +59,7 @@ public class UserAPI extends HttpServlet {
 				response
 					.getWriter()
 					.append(this.gson.toJson(userModel));
-			} else if(parameters.matches("^.+/.+$")) {
-				// /user/id/1
-				
-				// FUNCIONA APENAS QUANDO SEGUNDO PARÂMETRO É STRING NO BANCO
-				
-				String valuesParameters[] = parameters.split("/");
-				UserModel userModel = this.userController.findFirst(valuesParameters[0], valuesParameters[1]);
-				
-				response
-					.getWriter()
-					.append(this.gson.toJson(userModel))
-					.append(" " + parameters + " ");
+			
 			} else {
 				response
 					.getWriter()
@@ -97,7 +86,7 @@ public class UserAPI extends HttpServlet {
 			String stringJson = JsonHelper.getJsonRequest(request);
 			UserModel userModel = this.gson.fromJson(stringJson, UserModel.class);
 			
-			userModel = this.userController.create(userModel);
+			this.userController.create(userModel);
 			
 			response
 				.getWriter()
@@ -121,7 +110,7 @@ public class UserAPI extends HttpServlet {
 			String stringJson = JsonHelper.getJsonRequest(request);
 			UserModel userModel = this.gson.fromJson(stringJson, UserModel.class);
 			
-			userModel = this.userController.update(userModel);
+			this.userController.update(userModel);
 			
 			response
 				.getWriter()

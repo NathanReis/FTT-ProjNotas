@@ -14,6 +14,9 @@ abstract public class JsonHelper {
 			stringJson.append(linha);
 		}
 		
+		reader.close();
+		
 		return stringJson.toString();
 	}
 }
+
