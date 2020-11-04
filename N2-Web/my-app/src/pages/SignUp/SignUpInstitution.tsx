@@ -1,17 +1,23 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, {useState,ChangeEvent, FormEvent} from 'react';
 import '../../styles/SignUp.css';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from "react-icons/fi";
 import { ToastProvider, useToasts } from 'react-toast-notifications'
-import api from '../../services/api';
 import * as Yup from 'yup';
+
 
 import Logo from '../../assets/chart3.jpg';
 import Chart from '../../assets/chart2.png';
+import api from '../../services/api';
 
-const SignUp = () => {
-    const { addToast } = useToasts();
+
+interface InstitutionResponse {
+    id: Number
+}
+
+const SignUpInstitution = () => {
     const history = useHistory();
+    const { addToast } = useToasts();
 
     function addMessageToast() {
         addToast('Cadastrado com sucesso.', {
@@ -20,22 +26,16 @@ const SignUp = () => {
         })
     }
 
-
     const [formData, setFormData] = useState({
-        userName: '',
+        userName:'',
         password: '',
     });
-    const [selectedInstitution, setSelectedInstitution] = useState("0");
 
-    function handleSelectInstitution(event: ChangeEvent<HTMLSelectElement>) {
-        const inst = event.target.value;
-        setSelectedInstitution(inst);
-    }
-
-    function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    function handleInputChange(event:ChangeEvent<HTMLInputElement>)
+    {
         const { name, value } = event.target;
 
-        setFormData({ ...formData, [name]: value });
+        setFormData({...formData, [name]: value});
     }
 
     async function validateData(data: object){
@@ -50,27 +50,31 @@ const SignUp = () => {
         });
     }
 
-    async function handleSubmit(event: FormEvent) {
+    async function handleSubmit(event: FormEvent){
         try {
             event.preventDefault();
 
-            const { userName, password } = formData;
-            const inst = Number(selectedInstitution);
-            const tipo = 'A';
-
-
+            const{userName, password} = formData;
+            const tipo = 'I';
+    
+            const institution = {
+                name: userName
+            }
+            const institutionResponse = await api.post<InstitutionResponse>('teaching-institution', institution);
+    
+           
             const data = {
                 userName,
                 password,
-                teachingInstitution: {
-                    id: inst
+                teachingInstitution:{
+                    id:institutionResponse.data.id,
                 },
-                type: tipo
+                type:tipo
             }
 
             await validateData(data);
-
-            await api.post('user', data);
+    
+            await api.post('user',data);
             addMessageToast();
             history.push('/');
         } catch (error) {
@@ -79,10 +83,8 @@ const SignUp = () => {
                 autoDismiss: true,
             })
         }
-
+       
     }
-
-
     return (
         <div id="pagesignup-container">
 
@@ -93,16 +95,10 @@ const SignUp = () => {
                 <img src={Chart} />
                 <form onSubmit={handleSubmit}>
                     <h1>Cadastro</h1>
-                    <input name="userName" id="userName" onChange={handleInputChange} className="input" placeholder="Digite seu login"></input>
+                    <input name="userName" id="userName" onChange={handleInputChange} className="input" placeholder="Digite o nome da instituição"></input>
                     <input type="password" name="password" id="password" onChange={handleInputChange} className="input" placeholder="Digite sua senha"></input>
-                    <select name="institution" id="institution" onChange={handleSelectInstitution} className="select">
-                        <option value="0">Escolha sua faculdade</option>
-                        <option value="1">FTT</option>
-                        <option value="2">Fatec</option>
-                    </select>
                     <button type="submit">Cadastrar</button>
                 </form>
-                <Link to="/signupInstitution">Se cadastrar como instituição</Link>
                 <div className="back-home">
                     <FiArrowLeft />
                     <Link to="">Voltar para home</Link>
@@ -112,4 +108,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp;
+export default SignUpInstitution;
