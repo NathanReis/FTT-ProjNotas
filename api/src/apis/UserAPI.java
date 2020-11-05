@@ -23,7 +23,7 @@ public class UserAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private Gson gson = new Gson();
-	private UserController userController = new UserController(); 
+	private UserController userController = new UserController();
        
     /**
      * @see HttpServlet#HttpServlet()

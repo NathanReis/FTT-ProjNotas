@@ -36,7 +36,7 @@ CREATE TABLE `tbSubjects`
 );
 
 CREATE TABLE `tbSubjectsXUsers`
-(tbsubjects
+(
   `id` INT UNSIGNED AUTO_INCREMENT,
   `idSubject` SMALLINT UNSIGNED NOT NULL,
   `idTeachingInstitution` SMALLINT UNSIGNED NOT NULL,
