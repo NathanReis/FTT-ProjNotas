@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import models.TeachingInstitutionModel;
 import models.UserModel;
+import services.UserService;
 
 public class UserRepository extends Repository<UserModel> {
 	public UserRepository(){
@@ -15,6 +16,11 @@ public class UserRepository extends Repository<UserModel> {
 	
 	@Override
 	public int create(UserModel user) throws SQLException, ClassNotFoundException {
+		
+		UserService valida = new UserService();
+		
+		valida.ValidaUser(user);
+		
 		String sql = "INSERT INTO " + this.table + " ";
 		sql       += "  (password, userName, idTeachingInstitution, type) ";
 		sql       += "VALUES ";
@@ -25,7 +31,6 @@ public class UserRepository extends Repository<UserModel> {
 			stmt.setString(2, user.getUserName());
 			stmt.setInt(3, user.getTeachingInstitution().getId());
 			stmt.setString(4, user.getType());
-			
 			stmt.executeUpdate();
 		}
 		
@@ -62,6 +67,7 @@ public class UserRepository extends Repository<UserModel> {
 	
 	@Override
 	public UserModel findFirst(String field, double value) throws SQLException, ClassNotFoundException {
+
 		String sql = "SELECT * ";
 		sql       += "FROM " + this.table + " ";
 		sql       += "WHERE " + field + " = ? ";
@@ -92,6 +98,7 @@ public class UserRepository extends Repository<UserModel> {
 	
 	@Override
 	public UserModel findFirst(String field, int value) throws SQLException, ClassNotFoundException {
+		
 		String sql = "SELECT * ";
 		sql       += "FROM " + this.table + " ";
 		sql       += "WHERE " + field + " = ? ";
@@ -122,6 +129,7 @@ public class UserRepository extends Repository<UserModel> {
 	
 	@Override
 	public UserModel findFirst(String field, String value) throws SQLException, ClassNotFoundException {
+		
 		String sql = "SELECT * ";
 		sql       += "FROM " + this.table + " ";
 		sql       += "WHERE " + field + " = ? ";

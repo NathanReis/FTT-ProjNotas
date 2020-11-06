@@ -41,7 +41,6 @@ abstract public class Repository<TEntity extends Model> {
 				id = rs.getInt("id");
 			}
 		}
-		
 		return id;
 	}
 } 

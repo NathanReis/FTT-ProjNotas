@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import models.TeachingInstitutionModel;
+import services.TeachingInstitutionService;
 
 public class TeachingInstitutionRepository extends Repository<TeachingInstitutionModel> {
 	public TeachingInstitutionRepository() {
@@ -14,6 +15,11 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 
 	@Override
 	public int create(TeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
+		
+		TeachingInstitutionService valida = new TeachingInstitutionService();
+		
+		valida.ValidaUser(entity);
+		
 		String sql = "INSERT INTO " + this.table + " ";
 		sql       += "    (name) ";
 		sql       += "VALUES ";
