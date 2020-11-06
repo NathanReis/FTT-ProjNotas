@@ -1,21 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../styles/Home.css'
 import User from '../../assets/user.png';
 import HomeImage from '../../assets/logo.svg';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import LoggedUser from '../../helpers/LoggedUser';
+import Logoff from '../../helpers/Logoff';
+
+interface User {
+    userName: String,
+    password: String,
+    type: String,
+    teachingInstitution: {
+        name: String;
+    }
+}
 
 const Home = () => {
+    const [user, setUser] = useState<User>();
+    const history = useHistory();
+
+    // useEffect(() => {
+    //     const user = LoggedUser;
+    //     setUser(user);
+    // }, []);
+
+    useEffect(() => {
+        const user = localStorage.getItem('@FTT:user');
+
+        if (user) {
+            const parsedUser = JSON.parse(user);
+            setUser(parsedUser);
+        }
+        else{
+            history.push('/');
+            return;
+        }
+    }, []);
+
+    function handleLogoff() {
+        Logoff();
+        history.push('/');
+    }
+
     return (
         <div id="homepage-container">
 
             <div className="side-menu">
                 <div className="side-container">
                     <img alt="user" src={User} />
-                    <h2>Bem vindo usuário</h2>
+                    <h2>Bem vindo {user?.userName}</h2>
                     <Link to="/subjects">Escolher matérias</Link>
                     <Link to="">Cadastrar notas</Link>
                     <Link to="">Ver médias</Link>
                     <Link to="">Editar conta</Link>
+                    <button onClick={handleLogoff} className="button-custom">Logoff</button>
                 </div>
             </div>
             <div className="home-container">

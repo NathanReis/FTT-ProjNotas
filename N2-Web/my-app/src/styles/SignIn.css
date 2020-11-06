@@ -20,8 +20,8 @@
 .login-container img{
     width: 10vw;
 }
-.login-container input{
-    width: 250px;
+.login-container form input{
+    width: 290px;
     height: 10px;
     background-color: rgb(26 25 43);
     border: none;
@@ -32,6 +32,10 @@
 }
 .login-container .create-account{
     margin-top: 20%;
+}
+.login-container form{
+    display: flex;
+    flex-direction: column;
 }
 .login-container button{
     width: 290px;
