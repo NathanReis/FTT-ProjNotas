@@ -29,6 +29,7 @@ public class UserRepository extends Repository<UserModel> {
 			stmt.setString(2, user.getUserName());
 			stmt.setInt(3, user.getTeachingInstitution().getId());
 			stmt.setString(4, user.getType());
+			
 			stmt.executeUpdate();
 		}
 		
@@ -42,7 +43,6 @@ public class UserRepository extends Repository<UserModel> {
 		
 		UserModel userModel = new UserModel();
 		userModel.setId(resultSet.getInt("id"));
-		userModel.setPassword(resultSet.getString("password"));
 		userModel.setType(resultSet.getString("type"));
 		userModel.setUserName(resultSet.getString("userName"));
 		userModel.setTeachingInstitution(teachingInstitutionModel);

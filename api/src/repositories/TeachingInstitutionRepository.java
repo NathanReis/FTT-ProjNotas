@@ -25,6 +25,7 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 		
 		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
 			stmt.setString(1, entity.getName());
+			
 			stmt.executeUpdate();
 		}
 		
