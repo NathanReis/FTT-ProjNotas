@@ -3,7 +3,6 @@ package repositories;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import models.TeachingInstitutionModel;
 import models.UserModel;
@@ -16,7 +15,6 @@ public class UserRepository extends Repository<UserModel> {
 	
 	@Override
 	public int create(UserModel user) throws SQLException, ClassNotFoundException {
-		
 		UserService valida = new UserService();
 		
 		valida.ValidaUser(user);
@@ -35,125 +33,19 @@ public class UserRepository extends Repository<UserModel> {
 		}
 		
 		return this.getInsertedId();
-	} 
-	
-	@Override
-	public ArrayList<UserModel> findAll() throws SQLException, ClassNotFoundException {
-		String sql = "SELECT * FROM " + this.table + ";";
-		
-		ArrayList<UserModel> userModels = new ArrayList<UserModel>();
-		
-		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			ResultSet rs = stmt.executeQuery();
-			
-			while(rs.next()) {
-				TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
-				teachingInstitutionModel.setId(rs.getInt("idTeachingInstitution"));
-				
-				UserModel userModel = new UserModel();
-				userModel.setId(rs.getInt("id"));
-				userModel.setPassword(rs.getString("password"));
-				userModel.setType(rs.getString("type"));
-				userModel.setUserName(rs.getString("userName"));
-				userModel.setTeachingInstitution(teachingInstitutionModel);
-				
-				userModels.add(userModel);
-			}
-		}
-		
-		return userModels;
-	}
-	
-	
-	@Override
-	public UserModel findFirst(String field, double value) throws SQLException, ClassNotFoundException {
-
-		String sql = "SELECT * ";
-		sql       += "FROM " + this.table + " ";
-		sql       += "WHERE " + field + " = ? ";
-		sql       += "LIMIT 1;";
-		
-		UserModel userModel = null;
-		
-		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			stmt.setDouble(1, value);
-			
-			ResultSet rs = stmt.executeQuery();
-			
-			if(rs.next()) {
-				TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
-				teachingInstitutionModel.setId(rs.getInt("idTeachingInstitution"));
-				
-				userModel = new UserModel();
-				userModel.setId(rs.getInt("id"));
-				userModel.setPassword(rs.getString("password"));
-				userModel.setType(rs.getString("type"));
-				userModel.setUserName(rs.getString("userName"));
-				userModel.setTeachingInstitution(teachingInstitutionModel);
-			}
-		}
-		
-		return userModel;
 	}
 	
 	@Override
-	public UserModel findFirst(String field, int value) throws SQLException, ClassNotFoundException {
+	public UserModel fillModel(ResultSet resultSet) throws SQLException {
+		TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
+		teachingInstitutionModel.setId(resultSet.getInt("idTeachingInstitution"));
 		
-		String sql = "SELECT * ";
-		sql       += "FROM " + this.table + " ";
-		sql       += "WHERE " + field + " = ? ";
-		sql       += "LIMIT 1;";
-		
-		UserModel userModel = null;
-		
-		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			stmt.setInt(1, value);
-			
-			ResultSet rs = stmt.executeQuery();
-			
-			if(rs.next()) {
-				TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
-				teachingInstitutionModel.setId(rs.getInt("idTeachingInstitution"));
-				
-				userModel = new UserModel();
-				userModel.setId(rs.getInt("id"));
-				userModel.setPassword(rs.getString("password"));
-				userModel.setType(rs.getString("type"));
-				userModel.setUserName(rs.getString("userName"));
-				userModel.setTeachingInstitution(teachingInstitutionModel);
-			}
-		}
-		
-		return userModel;
-	}
-	
-	@Override
-	public UserModel findFirst(String field, String value) throws SQLException, ClassNotFoundException {
-		
-		String sql = "SELECT * ";
-		sql       += "FROM " + this.table + " ";
-		sql       += "WHERE " + field + " = ? ";
-		sql       += "LIMIT 1;";
-		
-		UserModel userModel = null;
-		
-		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			stmt.setString(1, value);
-			
-			ResultSet rs = stmt.executeQuery();
-			
-			if(rs.next()) {
-				TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
-				teachingInstitutionModel.setId(rs.getInt("idTeachingInstitution"));
-				
-				userModel = new UserModel();
-				userModel.setId(rs.getInt("id"));
-				userModel.setPassword(rs.getString("password"));
-				userModel.setType(rs.getString("type"));
-				userModel.setUserName(rs.getString("userName"));
-				userModel.setTeachingInstitution(teachingInstitutionModel);
-			}
-		}
+		UserModel userModel = new UserModel();
+		userModel.setId(resultSet.getInt("id"));
+		userModel.setPassword(resultSet.getString("password"));
+		userModel.setType(resultSet.getString("type"));
+		userModel.setUserName(resultSet.getString("userName"));
+		userModel.setTeachingInstitution(teachingInstitutionModel);
 		
 		return userModel;
 	}
