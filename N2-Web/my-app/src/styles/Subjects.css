@@ -39,6 +39,13 @@
     font-size: 20px;
     margin-top: 5px;
 }
+.side-container .button-custom{
+    background-color: transparent;
+    border: transparent;
+    color: white;
+    font-size: 20px;
+    margin-top: 5px;
+}
 .side-container h4{
     color: white;
     margin-top: 5px;
