@@ -27,7 +27,7 @@ Para fins de mater a segunça, integridades e coisas do tipo dos alunos, não é
 - Font-end com React e ReactJS
 - API RESTful feita com servelet
 - Comunicação entre back-end e front-end via JSON
-- Persistência de dados com Hibernate
+- Persistência de dados com JDBC
 
 ## Rodando em ambiente de desenvolvimento
 
@@ -41,12 +41,15 @@ cd FTT-ProjNotas
 
 ### Banco de dados
 
-Na pasta referenceFiles, que está na raiz do repositório, tem o script "db.sql", executá-lo por completo para criar a base e dados e o usuário que está configurado no Hibernate.
+Na pasta referenceFiles, que está na raiz do repositório, tem o script "db.sql", executá-lo por completo para ter seu banco já estruturado.
 
 ### API
 
 Abrir a pasta "api" no Eclipse e rodar o projeto.
+
 **URL base:** http://localhost:8080/projnotas.api
+
+Tambem na pasta referenceFiles, tem um arquivo de collection do Postman ("ProjNotasAPI.postman_collection.json") para teste da API, é possível importa-lo tambem no Insomnia caso seja sua preferência, sempre que atualizamos nossa API este arquivo também é atualizado.
 
 ### Front-end WEB
 
