@@ -37,6 +37,24 @@ public class UserRepository extends Repository<UserModel> {
 	}
 	
 	@Override
+	public void delete(int id) throws SQLException, ClassNotFoundException {
+		UserModel userModel = this.findFirst("id", id);
+		
+		if(userModel.getType().equals("I")) {
+			TeachingInstitutionRepository teachingInstitutionRepository = new TeachingInstitutionRepository();
+			
+			teachingInstitutionRepository.delete(userModel.getTeachingInstitution().getId());
+		}
+		
+		String sql = "DELETE FROM " + this.table + " WHERE id = ?;"; 
+		
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+			 stmt.setInt(1, id);
+			 stmt.executeUpdate();
+		}
+	}
+	
+	@Override
 	public UserModel fillModel(ResultSet resultSet) throws SQLException {
 		TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
 		teachingInstitutionModel.setId(resultSet.getInt("idTeachingInstitution"));

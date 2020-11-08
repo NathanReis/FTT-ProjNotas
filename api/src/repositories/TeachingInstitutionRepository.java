@@ -33,6 +33,37 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 	}
 	
 	@Override
+	public void delete(int id) throws SQLException, ClassNotFoundException {
+		String sql = "DELETE FROM tbSubjectsXTeachingInstitutions WHERE idTeachingInstitution = ?;";
+		
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+			 stmt.setInt(1, id);
+			 stmt.executeUpdate();
+		}
+		
+		sql = "DELETE FROM tbSubjectsXUsers WHERE idTeachingInstitution = ?;";
+		
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+			 stmt.setInt(1, id);
+			 stmt.executeUpdate();
+		}
+		
+		sql = "UPDATE tbUsers SET idTeachingInstitution = null WHERE idTeachingInstitution = ?;";
+		
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+			 stmt.setInt(1, id);
+			 stmt.executeUpdate();
+		}
+		
+		sql = "DELETE FROM " + this.table + " WHERE id = ?;";
+		
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+			 stmt.setInt(1, id);
+			 stmt.executeUpdate();
+		}
+	}
+	
+	@Override
 	public TeachingInstitutionModel fillModel(ResultSet resultSet) throws SQLException {
 		TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
 		teachingInstitutionModel.setId(resultSet.getInt("id"));
