@@ -22,7 +22,6 @@ import models.TeachingInstitutionModel;
 public class TeachingInstitutionAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private Gson gson = new Gson();
 	private TeachingInstitutionController teachingInstitutionController = new TeachingInstitutionController(); 
        
     /**
@@ -46,19 +45,14 @@ public class TeachingInstitutionAPI extends HttpServlet {
 			if(parameters.isBlank()) {
 				// /teaching-institution
 				
-				List<TeachingInstitutionModel> teachingInstitutionModels = this.teachingInstitutionController.findAll(); 
+				this.teachingInstitutionController.findAll(request, response); 
 				
-				response
-					.getWriter()
-					.append(this.gson.toJson(teachingInstitutionModels));
 			} else if(parameters.matches("^\\d+$")) {
 				// /teaching-institution/1
 				
-				TeachingInstitutionModel teachingInstitutionModel = this.teachingInstitutionController.findFirst("id", Integer.parseInt(parameters));
+				this.teachingInstitutionController.findFirst("id", Integer.parseInt(parameters),request, response);
 				
-				response
-					.getWriter()
-					.append(this.gson.toJson(teachingInstitutionModel));
+				
 			}  else {
 				response
 					.getWriter()
@@ -81,19 +75,8 @@ public class TeachingInstitutionAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		try {
-			String stringJson = JsonHelper.getJsonRequest(request);
-			TeachingInstitutionModel teachingInstitutionModel = this.gson.fromJson(stringJson, TeachingInstitutionModel.class);
-			
-			this.teachingInstitutionController.update(teachingInstitutionModel);
-			
-			response
-				.getWriter()
-				.append(this.gson.toJson(teachingInstitutionModel));
-		} catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
+		this.teachingInstitutionController.update(request, response);
+		
+		
 	}
 }

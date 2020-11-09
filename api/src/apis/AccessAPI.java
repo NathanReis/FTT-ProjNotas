@@ -39,20 +39,9 @@ public class AccessAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		try {
-			String stringJson = JsonHelper.getJsonRequest(request);
-			AccessModel accessModel = this.gson.fromJson(stringJson, AccessModel.class);
-			
-			UserModel userModel = this.accessController.login(accessModel);
-			
-			response
-				.getWriter()
-				.append(this.gson.toJson(userModel));
-		} catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
+		this.accessController.login(request, response);
+		
+		
 	}
 
 }

@@ -22,7 +22,6 @@ import models.UserModel;
 public class UserAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private Gson gson = new Gson();
 	private UserController userController = new UserController();
        
     /**
@@ -46,19 +45,14 @@ public class UserAPI extends HttpServlet {
 			if(parameters.isBlank()) {
 				// /user
 				
-				List<UserModel> userModels = this.userController.findAll();
+				this.userController.findAll(request, response);
 				
-				response
-					.getWriter()
-					.append(this.gson.toJson(userModels));
+				
 			} else if(parameters.matches("^\\d+$")) {
 				// /user/1
 				
-				UserModel userModel = this.userController.findFirst("id", Integer.parseInt(parameters));
+				this.userController.findFirst("id", Integer.parseInt(parameters), request, response);
 				
-				response
-					.getWriter()
-					.append(this.gson.toJson(userModel));
 			
 			} else {
 				response
@@ -82,20 +76,7 @@ public class UserAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		try {
-			String stringJson = JsonHelper.getJsonRequest(request);
-			UserModel userModel = this.gson.fromJson(stringJson, UserModel.class);
-			
-			this.userController.create(userModel);
-			
-			response
-				.getWriter()
-				.append(this.gson.toJson(userModel));
-		} catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
+		this.userController.create(request, response);
 	}
 
 	/**
@@ -106,20 +87,9 @@ public class UserAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		try {
-			String stringJson = JsonHelper.getJsonRequest(request);
-			UserModel userModel = this.gson.fromJson(stringJson, UserModel.class);
-			
-			this.userController.update(userModel);
-			
-			response
-				.getWriter()
-				.append(this.gson.toJson(userModel));
-		} catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
+		this.userController.update(request, response);
+		
+		
 	}
 
 	/**
@@ -140,17 +110,9 @@ public class UserAPI extends HttpServlet {
 			return;
 		}
 		
-		try {
-			int id = Integer.parseInt(request.getRequestURI().replaceFirst(".*/user/+", ""));
-			this.userController.delete(id);
-			
-			response
-				.getWriter()
-				.append("DELETE");
-		} catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
+		int id = Integer.parseInt(request.getRequestURI().replaceFirst(".*/user/+", ""));
+		this.userController.delete(id, request, response);
+		
+		
 	}
 }

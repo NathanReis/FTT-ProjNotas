@@ -1,6 +1,10 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import models.Model;
 import repositories.ConnectionDB;
@@ -13,91 +17,17 @@ abstract public class Controller<T extends Model> {
 		this.repository = repository;
 	}
 	
-	public void create(T model) {
-		try {
-			int id = this.repository.create(model);
-			
-			model.setId(id);
-			
-			ConnectionDB.closeInstance();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	abstract public void create(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
-	public void delete(int id) {
-		try {
-			this.repository.delete(id);
-			
-			ConnectionDB.closeInstance();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	abstract public void delete(int id, HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
-	public ArrayList<T> findAll() {
-		ArrayList<T> models = null;
-		
-		try {
-			models = this.repository.findAll();
-			
-			ConnectionDB.closeInstance();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return models;
-	}
+	abstract public void findAll(HttpServletRequest request, HttpServletResponse response) throws IOException;
 	
-	public T findFirst(String field, double value) {
-		T model = null;
-		
-		try {
-			model = (T)this.repository.findFirst(field, value);
-			
-			ConnectionDB.closeInstance();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return model;
-	}
+	abstract public void findFirst(String field, double value, HttpServletRequest request, HttpServletResponse response)throws IOException; 
 	
-	public T findFirst(String field, int value) {
-		T model = null;
-		
-		try {
-			model = (T)this.repository.findFirst(field, value);
-			
-			ConnectionDB.closeInstance();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return model;
-	}
+	abstract public void findFirst(String field, int value, HttpServletRequest request, HttpServletResponse response)throws IOException; 
 	
-	public T findFirst(String field, String value) {
-		T model = null;
-		
-		try {
-			model = (T)this.repository.findFirst(field, value);
-			
-			ConnectionDB.closeInstance();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		return model;
-	}
+	abstract public void findFirst(String field, String value, HttpServletRequest request, HttpServletResponse response)throws IOException; 
 	
-	public void update(T model) {
-		try {
-			this.repository.update(model);
-			
-			ConnectionDB.closeInstance();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	abstract public void update(HttpServletRequest request, HttpServletResponse response) throws IOException;
 }
