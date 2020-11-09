@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.ErrorModel;
 import models.UserModel;
 import repositories.ConnectionDB;
 import repositories.UserRepository;
@@ -36,9 +37,12 @@ public class UserController extends Controller<UserModel> {
 					.getWriter()
 					.append(this.gson.toJson(userModel));
 		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
 			response
 			.getWriter()
-			.append(exception.getMessage());
+			.append(this.gson.toJson(error));
 		}
 	}
 
@@ -54,9 +58,12 @@ public class UserController extends Controller<UserModel> {
 				.append("DELETE");
 			
 		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
 			response
-				.getWriter()
-				.append(exception.getMessage());
+			.getWriter()
+			.append(this.gson.toJson(error));
 		}
 		
 		

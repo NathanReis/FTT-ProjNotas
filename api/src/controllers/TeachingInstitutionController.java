@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import helpers.JsonHelper;
+import models.ErrorModel;
 import models.TeachingInstitutionModel;
 import models.UserModel;
 import repositories.ConnectionDB;
@@ -43,9 +44,12 @@ public class TeachingInstitutionController extends Controller<TeachingInstitutio
 				.append(this.gson.toJson(teachingInstitutionModel));
 			
 		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
 			response
-				.getWriter()
-				.append(exception.getMessage());
+			.getWriter()
+			.append(this.gson.toJson(error));
 		}
 		
 	}
