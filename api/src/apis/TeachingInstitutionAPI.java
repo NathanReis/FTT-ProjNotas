@@ -74,30 +74,6 @@ public class TeachingInstitutionAPI extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		try {
-			String stringJson = JsonHelper.getJsonRequest(request);
-			TeachingInstitutionModel teachingInstitutionModel = this.gson.fromJson(stringJson, TeachingInstitutionModel.class);
-			
-			this.teachingInstitutionController.create(teachingInstitutionModel);
-			
-			response
-				.getWriter()
-				.append(this.gson.toJson(teachingInstitutionModel));
-		} catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
-	}
-
-	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -114,38 +90,6 @@ public class TeachingInstitutionAPI extends HttpServlet {
 			response
 				.getWriter()
 				.append(this.gson.toJson(teachingInstitutionModel));
-		} catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
-	}
-
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		if(!request.getRequestURI().matches("^.*/teaching-institution/\\d+$")) {
-			// ! /teaching-institution/1
-			
-			response
-				.getWriter()
-				.append("INVALID ROUTE DELETE");
-			
-			return;
-		}
-		
-		try {
-			int id = Integer.parseInt(request.getRequestURI().replaceFirst(".*/teaching-institution/+", ""));
-			this.teachingInstitutionController.delete(id);
-			
-			response
-				.getWriter()
-				.append("DELETE");
 		} catch(Exception exception) {
 			response
 				.getWriter()

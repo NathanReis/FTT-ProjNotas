@@ -55,12 +55,7 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 			 stmt.executeUpdate();
 		}
 		
-		sql = "DELETE FROM " + this.table + " WHERE id = ?;";
-		
-		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			 stmt.setInt(1, id);
-			 stmt.executeUpdate();
-		}
+		super.delete(id);
 	}
 	
 	@Override

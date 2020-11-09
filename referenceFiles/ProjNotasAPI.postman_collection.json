@@ -9,35 +9,6 @@
 			"name": "TeachingInstitution",
 			"item": [
 				{
-					"name": "Create",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Institution 1\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/teaching-institution",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"teaching-institution"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Update",
 					"request": {
 						"method": "PUT",
@@ -90,27 +61,6 @@
 					"name": "Show",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/teaching-institution/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"teaching-institution",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/projnotas.api/teaching-institution/1",
@@ -295,7 +245,7 @@
 	],
 	"variable": [
 		{
-			"id": "066de6ab-a7e8-47cb-9492-78a81d33ff96",
+			"id": "bbdc705b-197e-4335-9b7c-f6a4e42b96df",
 			"key": "baseURL",
 			"value": "http://localhost:8080/teste-hibernate/"
 		}

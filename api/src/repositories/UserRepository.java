@@ -19,6 +19,16 @@ public class UserRepository extends Repository<UserModel> {
 		
 		valida.ValidaUser(user);
 		
+		if(user.getType().equals("I")) {
+			TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
+			teachingInstitutionModel.setName(user.getUserName());
+			
+			TeachingInstitutionRepository teachingInstitutionRepository = new TeachingInstitutionRepository();
+			int idTteachingInstitution = teachingInstitutionRepository.create(teachingInstitutionModel);
+			
+			user.getTeachingInstitution().setId(idTteachingInstitution);
+		}
+		
 		String sql = "INSERT INTO " + this.table + " ";
 		sql       += "  (password, userName, idTeachingInstitution, type) ";
 		sql       += "VALUES ";
@@ -40,18 +50,19 @@ public class UserRepository extends Repository<UserModel> {
 	public void delete(int id) throws SQLException, ClassNotFoundException {
 		UserModel userModel = this.findFirst("id", id);
 		
-		if(userModel.getType().equals("I")) {
-			TeachingInstitutionRepository teachingInstitutionRepository = new TeachingInstitutionRepository();
+		if(userModel.getType().equals("A")) {
+			String sql = "DELETE FROM tbSubjectsXUsers WHERE idUser = ?;"; 
 			
+			try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+				 stmt.setInt(1, id);
+				 stmt.executeUpdate();
+			}
+		} else {
+			TeachingInstitutionRepository teachingInstitutionRepository = new TeachingInstitutionRepository();
 			teachingInstitutionRepository.delete(userModel.getTeachingInstitution().getId());
 		}
 		
-		String sql = "DELETE FROM " + this.table + " WHERE id = ?;"; 
-		
-		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			 stmt.setInt(1, id);
-			 stmt.executeUpdate();
-		}
+		super.delete(id);
 	}
 	
 	@Override

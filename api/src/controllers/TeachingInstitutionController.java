@@ -7,4 +7,10 @@ public class TeachingInstitutionController extends Controller<TeachingInstitutio
 	public TeachingInstitutionController() {
 		super(new TeachingInstitutionRepository());
 	}
+	
+	@Override
+	public void create(TeachingInstitutionModel model) {}
+	
+	@Override
+	public void delete(int id) {}
 }
