@@ -270,6 +270,133 @@
 				}
 			],
 			"protocolProfileBehavior": {}
+		},
+		 
+		{
+			"name": "SubjectXTeachingInstitution",
+			"item":[
+				{
+					"name": "Create SubjectXTeachingInstitution",
+					"request":{
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subject\": {\n        \"id\": 0\n},\n    \"teachingInstitution\": {\n        \"id\": 1\n},\n        \"active\": \"A\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXTeachingInstitution"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update SubjectXTeachingInstitution",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"id\": 1,\n    \"subject\": {\n        \"id\": 0\n},\n     \"teachingInstitution\": {\n        \"id\": 1\n},\n    \"active\": \"I\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXTeachingInstitution"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXTeachingInstitution"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXTeachingInstitution",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXTeachingInstitution",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"variable": [
