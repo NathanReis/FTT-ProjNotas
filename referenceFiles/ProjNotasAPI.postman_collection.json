@@ -270,7 +270,9 @@
 				}
 			],
 			"protocolProfileBehavior": {}
-		},
+
+		},	 
+
 		{
 			"name": "SubjectXTeachingInstitution",
 			"item": [
@@ -367,6 +369,132 @@
 							"path": [
 								"projnotas.api",
 								"subjectXTeachingInstitution",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "SubjectXUser",
+			"item":[
+				{
+					"name": "Create SubjectXUser",
+					"request":{
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subject\": {\n        \"id\": 0\n},\n    \"teachingInstitution\": {\n        \"id\": 1\n},\n    \"user\": {\n        \"id\":1\n},\n    \"grade\": 1,\n    \"semester\": 1,\n    \"year\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update subjectXUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"id\": 1,\n     \"subject\": {\n        \"id\": 0\n},\n    \"teachingInstitution\": {\n        \"id\": 1\n},\n    \"user\": {\n        \"id\":1\n},\n    \"grade\": 2,\n    \"semester\": 1,\n    \"year\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXUser/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXUser",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subjectXUser/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subjectXUser",
 								"1"
 							]
 						}
