@@ -13,14 +13,7 @@ interface institution{
     name:String,
     id:number,
 }
-interface User {
-    userName: String,
-    password: String,
-    type: String,
-    teachingInstitution: {
-        name: String;
-    }
-}
+
 
 const SignUp = () => {
     const { addToast } = useToasts();

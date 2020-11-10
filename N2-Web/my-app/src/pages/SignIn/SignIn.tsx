@@ -67,7 +67,7 @@ const SignIn = () => {
                     history.push('/home');
                     return;
                 }
-                history.push('/')
+                history.push('/home-institution')
                 return;
             }
             addMessageToastError();

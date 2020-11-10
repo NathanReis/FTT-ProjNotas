@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/Home.css'
-import User from '../../assets/user.png';
+import UserImg from '../../assets/user.png';
 import HomeImage from '../../assets/logo.svg';
 import { Link, useHistory } from 'react-router-dom';
 import LoggedUser from '../../helpers/LoggedUser';
@@ -15,7 +15,7 @@ interface User {
     }
 }
 
-const Home = () => {
+const HomeInstitution = () => {
     const [user, setUser] = useState<User>();
     const history = useHistory();
 
@@ -30,9 +30,6 @@ const Home = () => {
         if (user) {
             const parsedUser = JSON.parse(user);
             setUser(parsedUser);
-            if(parsedUser.type === "I"){
-                history.push('/home-institution')
-            }
         }
         else{
             history.push('/');
@@ -50,12 +47,11 @@ const Home = () => {
 
             <div className="side-menu">
                 <div className="side-container">
-                    <img alt="user" src={User} />
+                    <img alt="user" src={UserImg} />
                     <h2>Bem vindo {user?.userName}</h2>
                     <Link to="/subjects">Escolher matérias</Link>
-                    <Link to="">Cadastrar notas</Link>
-                    <Link to="">Ver médias</Link>
-                    <Link to="/edit-student">Editar conta</Link>
+                    <Link to="">Ver médias dos alunos</Link>
+                    <Link to="">Editar conta</Link>
                     <button onClick={handleLogoff} className="button-custom">Logoff</button>
                 </div>
             </div>
@@ -65,10 +61,8 @@ const Home = () => {
                 <div className="image-container">
                     <img src={HomeImage} />
                     <ul>
-                        <li>Escolha suas matérias que está cursando na faculdade</li>
-                        <li>Informe sua média nessa matéria</li>
-                        <li>Veja como está se saindo em relação à sua turma (anonimamente)</li>
-                        <li>Veja como está se saindo em relação à outras instituições (anonimamente)</li>
+                        <li>Escolha as matérias que façam parte da sua instituição</li>
+                        <li>Veja como seus alunos estão em relação a outras instituições</li>
                     </ul>
                 </div>
             </div>
@@ -76,4 +70,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default HomeInstitution;
