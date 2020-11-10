@@ -11,9 +11,7 @@ public class SubjectRepository extends Repository<SubjectModel> {
 	}
 	
 	@Override
-	public int create(SubjectModel user) throws SQLException, ClassNotFoundException {
-		return 0;
-	}
+	public void create(SubjectModel user) throws SQLException, ClassNotFoundException {}
 	
 	@Override
 	public SubjectModel fillModel(ResultSet resultSet) throws SQLException {

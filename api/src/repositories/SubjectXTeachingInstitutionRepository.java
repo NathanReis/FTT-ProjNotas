@@ -14,7 +14,7 @@ public class SubjectXTeachingInstitutionRepository extends Repository<SubjectXTe
 	}
 
 	@Override
-	public int create(SubjectXTeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
+	public void create(SubjectXTeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
 		String sql = "INSERT INTO " + this.table + " ";
 		sql       += "  (idSubject, idTeachingInstitution, active) ";
 		sql       += "VALUES ";
@@ -28,7 +28,7 @@ public class SubjectXTeachingInstitutionRepository extends Repository<SubjectXTe
 			stmt.executeUpdate();
 		}
 		
-		return this.getInsertedId();
+		entity.setId(this.getInsertedId());
 	}
 	
 	@Override

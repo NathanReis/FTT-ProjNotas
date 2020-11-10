@@ -1,7 +1,6 @@
 package apis;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,10 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import controllers.TeachingInstitutionController;
-import helpers.JsonHelper;
 import models.TeachingInstitutionModel;
 
 /**
@@ -45,14 +41,11 @@ public class TeachingInstitutionAPI extends HttpServlet {
 			if(parameters.isBlank()) {
 				// /teaching-institution
 				
-				this.teachingInstitutionController.findAll(request, response); 
-				
+				this.teachingInstitutionController.findAll(request, response);
 			} else if(parameters.matches("^\\d+$")) {
 				// /teaching-institution/1
 				
 				this.teachingInstitutionController.findFirst("id", Integer.parseInt(parameters),request, response);
-				
-				
 			}  else {
 				response
 					.getWriter()
@@ -76,7 +69,5 @@ public class TeachingInstitutionAPI extends HttpServlet {
 		response.setContentType("application/json");
 		
 		this.teachingInstitutionController.update(request, response, TeachingInstitutionModel.class);
-		
-		
 	}
 }

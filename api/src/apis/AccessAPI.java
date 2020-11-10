@@ -7,12 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-
 import controllers.AccessController;
-import helpers.JsonHelper;
-import models.AccessModel;
-import models.UserModel;
 
 /**
  * Servlet implementation class AccessAPI
@@ -21,7 +16,6 @@ import models.UserModel;
 public class AccessAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private Gson gson = new Gson();
 	private AccessController accessController = new AccessController();
        
     /**
@@ -40,8 +34,5 @@ public class AccessAPI extends HttpServlet {
 		response.setContentType("application/json");
 		
 		this.accessController.login(request, response);
-		
-		
 	}
-
 }

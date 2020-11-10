@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import helpers.JsonHelper;
 import models.ErrorModel;
 import models.Model;
-import models.UserModel;
 import repositories.ConnectionDB;
 import repositories.Repository;
 
@@ -28,9 +27,7 @@ abstract public class Controller<T extends Model> {
 			String stringJson = JsonHelper.getJsonRequest(request);
 			T model = this.gson.fromJson(stringJson, classType);
 			
-			int id = this.repository.create(model);
-			
-			model.setId(id);
+			this.repository.create(model);
 			
 			ConnectionDB.closeInstance();
 			
@@ -48,47 +45,45 @@ abstract public class Controller<T extends Model> {
 		}
 	}
 	
-	 public void delete(int id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		 
-		 try {
-				this.repository.delete(id);
+	public void delete(int id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try {
+			this.repository.delete(id);
 				
-				ConnectionDB.closeInstance();
-				
-				response
-					.getWriter()
-					.append("DELETE");
-				
-			} catch(Exception exception) {
-				ErrorModel error = new ErrorModel();
-				error.setHasError(true);
-				error.setMessageError(exception.getMessage());
-				response
+			ConnectionDB.closeInstance();
+			
+			response
+				.getWriter()
+				.append("DELETE");
+		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
+			
+			response
 				.getWriter()
 				.append(this.gson.toJson(error));
-			}
-	 }
+		}
+	}
 	
 	public void findAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
-		ArrayList<T> model = null;
+		ArrayList<T> models = null;
 		
 		try {
-			model = this.repository.findAll();
+			models = this.repository.findAll();
 			
 			ConnectionDB.closeInstance();
 			
 			response
 				.getWriter()
-				.append(this.gson.toJson(model));
-			
+				.append(this.gson.toJson(models));
 		} catch(Exception exception) {
 			ErrorModel error = new ErrorModel();
 			error.setHasError(true);
 			error.setMessageError(exception.getMessage());
+			
 			response
-			.getWriter()
-			.append(this.gson.toJson(error));
+				.getWriter()
+				.append(this.gson.toJson(error));
 		}
 	}
 	
@@ -103,19 +98,18 @@ abstract public class Controller<T extends Model> {
 			response
 				.getWriter()
 				.append(this.gson.toJson(model));
-			
 		} catch(Exception exception) {
 			ErrorModel error = new ErrorModel();
 			error.setHasError(true);
 			error.setMessageError(exception.getMessage());
+			
 			response
-			.getWriter()
-			.append(this.gson.toJson(error));
+				.getWriter()
+				.append(this.gson.toJson(error));
 		}
 	} 
 	
 	public void findFirst(String field, int value, HttpServletRequest request, HttpServletResponse response)throws IOException {
-		
 		T model = null;
 		
 		try {

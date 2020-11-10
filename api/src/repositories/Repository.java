@@ -13,7 +13,7 @@ abstract public class Repository<TEntity extends Model> {
 		this.table = table;
 	}
 	
-	abstract public int create(TEntity entity) throws SQLException, ClassNotFoundException;
+	abstract public void create(TEntity entity) throws SQLException, ClassNotFoundException;
 	abstract public TEntity fillModel(ResultSet resulSet) throws SQLException;
 	abstract public void update(TEntity entity) throws SQLException, ClassNotFoundException;
 	
@@ -27,7 +27,7 @@ abstract public class Repository<TEntity extends Model> {
 	}
 	
 	public ArrayList<TEntity> findAll() throws SQLException, ClassNotFoundException {
-		String sql = "SELECT * FROM " + this.table + ";";
+		String sql = this.getSQLFindAll();
 		
 		ArrayList<TEntity> models = new ArrayList<TEntity>();
 		
@@ -110,6 +110,13 @@ abstract public class Repository<TEntity extends Model> {
 		}
 		
 		return id;
+	}
+	
+	protected String getSQLFindAll() {
+		String sql = "SELECT * ";
+		sql       += "FROM " + this.table + ";";
+		
+		return sql;
 	}
 	
 	protected String getSQLFindFirst(String field) {

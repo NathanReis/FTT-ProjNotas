@@ -14,12 +14,10 @@ import repositories.ConnectionDB;
 import repositories.AccessRepository;
 
 public class AccessController {
-	protected AccessRepository repository = new AccessRepository();
 	private Gson gson = new Gson();
+	protected AccessRepository repository = new AccessRepository();
 	
 	public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
-		
 		UserModel userModel = null;
 		
 		try {
@@ -33,12 +31,10 @@ public class AccessController {
 			response
 				.getWriter()
 				.append(this.gson.toJson(userModel));
-			
 		} catch(Exception exception) {
 			response
 				.getWriter()
 				.append(exception.getMessage());
 		}
-		
 	}
 }

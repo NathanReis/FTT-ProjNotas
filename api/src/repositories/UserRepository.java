@@ -14,19 +14,16 @@ public class UserRepository extends Repository<UserModel> {
 	}
 	
 	@Override
-	public int create(UserModel user) throws SQLException, ClassNotFoundException {
+	public void create(UserModel user) throws SQLException, ClassNotFoundException {
 		UserService valida = new UserService();
 		
 		valida.ValidaUser(user);
 		
 		if(user.getType().equals("I")) {
-			TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
-			teachingInstitutionModel.setName(user.getUserName());
+			user.getTeachingInstitution().setName(user.getUserName());
 			
 			TeachingInstitutionRepository teachingInstitutionRepository = new TeachingInstitutionRepository();
-			int idTteachingInstitution = teachingInstitutionRepository.create(teachingInstitutionModel);
-			
-			user.getTeachingInstitution().setId(idTteachingInstitution);
+			teachingInstitutionRepository.create(user.getTeachingInstitution());
 		}
 		
 		String sql = "INSERT INTO " + this.table + " ";
@@ -43,7 +40,7 @@ public class UserRepository extends Repository<UserModel> {
 			stmt.executeUpdate();
 		}
 		
-		return this.getInsertedId();
+		user.setId(this.getInsertedId());
 	}
 	
 	@Override
@@ -65,10 +62,36 @@ public class UserRepository extends Repository<UserModel> {
 		super.delete(id);
 	}
 	
+	protected String getSQLFindAll() {
+		String sql = "SELECT ";
+		sql       += "  u.*, ";
+		sql       += "  ti.name AS nameInstitution ";
+		sql       += "FROM " + this.table + " AS u ";
+		sql       += "  LEFT JOIN tbTeachingInstitutions AS ti ";
+		sql       += "    ON ti.id = u.idTeachingInstitution;";
+		
+		return sql;
+	}
+	
+	@Override
+	protected String getSQLFindFirst(String field) {
+		String sql = "SELECT ";
+		sql       += "  u.*, ";
+		sql       += "  ti.name AS nameInstitution ";
+		sql       += "FROM " + this.table + " AS u ";
+		sql       += "  LEFT JOIN tbTeachingInstitutions AS ti ";
+		sql       += "    ON ti.id = u.idTeachingInstitution ";
+		sql       += "WHERE u." + field + " = ? ";
+		sql       += "LIMIT 1;";
+		
+		return sql;
+	}
+	
 	@Override
 	public UserModel fillModel(ResultSet resultSet) throws SQLException {
 		TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
 		teachingInstitutionModel.setId(resultSet.getInt("idTeachingInstitution"));
+		teachingInstitutionModel.setName(resultSet.getNString("nameInstitution"));
 		
 		UserModel userModel = new UserModel();
 		userModel.setId(resultSet.getInt("id"));
@@ -83,16 +106,24 @@ public class UserRepository extends Repository<UserModel> {
 	public void update(UserModel user) throws SQLException, ClassNotFoundException {
 		String sql = "UPDATE " + this.table + " ";
 		sql       += "SET ";
-		sql       += "  password = ?, idTeachingInstitution = ? ";
+		sql       += "  userName = ?, ";
+		sql       += "  idTeachingInstitution = ? ";
 		sql       += "WHERE ";
 		sql       += "  id = ?;";
 		
 		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			stmt.setString(1,user.getPassword());
+			stmt.setString(1, user.getUserName());
 			stmt.setInt(2, user.getTeachingInstitution().getId());
 			stmt.setInt(3, user.getId());
 			
 			stmt.executeUpdate();
 		}
-	} 
+		
+		if(user.getType().equals("I")) {
+			user.getTeachingInstitution().setName(user.getUserName());
+			
+			TeachingInstitutionRepository teachingInstitutionRepository = new TeachingInstitutionRepository();
+			teachingInstitutionRepository.update(user.getTeachingInstitution());
+		}
+	}
 }

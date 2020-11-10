@@ -13,7 +13,7 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 	}
 
 	@Override
-	public int create(TeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
+	public void create(TeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
 		TeachingInstitutionService valida = new TeachingInstitutionService();
 		
 		valida.ValidaUser(entity);
@@ -29,7 +29,7 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 			stmt.executeUpdate();
 		}
 		
-		return this.getInsertedId();
+		entity.setId(this.getInsertedId());
 	}
 	
 	@Override

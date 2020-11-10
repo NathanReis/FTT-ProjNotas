@@ -8,5 +8,4 @@ public class TeachingInstitutionController extends Controller<TeachingInstitutio
 	public TeachingInstitutionController() {
 		super(new TeachingInstitutionRepository());
 	}
-		
 }
