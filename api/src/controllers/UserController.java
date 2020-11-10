@@ -17,34 +17,6 @@ public class UserController extends Controller<UserModel> {
 	public UserController() {
 		super (new UserRepository());
 	}
-	
-	private Gson gson = new Gson();
-
-	@Override
-	public void create(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		try {
-			
-			String stringJson = JsonHelper.getJsonRequest(request);
-			UserModel userModel = this.gson.fromJson(stringJson, UserModel.class);
-			
-			int id = this.repository.create(userModel);
-			
-			userModel.setId(id);
-			
-			ConnectionDB.closeInstance();
-			
-			response
-					.getWriter()
-					.append(this.gson.toJson(userModel));
-		} catch(Exception exception) {
-			ErrorModel error = new ErrorModel();
-			error.setHasError(true);
-			error.setMessageError(exception.getMessage());
-			response
-			.getWriter()
-			.append(this.gson.toJson(error));
-		}
-	}
 
 	@Override
 	public void delete(int id, HttpServletRequest request ,HttpServletResponse response) throws IOException {

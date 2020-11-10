@@ -76,7 +76,7 @@ public class UserAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		this.userController.create(request, response);
+		this.userController.create(request, response, UserModel.class);
 	}
 
 	/**
