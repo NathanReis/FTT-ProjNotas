@@ -26,6 +26,13 @@ const SignUpInstitution = () => {
         })
     }
 
+    function addMessageToastError(message:String) {
+        addToast(message, {
+            appearance: 'error',
+            autoDismiss: true,
+        })
+    }
+
     const [formData, setFormData] = useState({
         userName:'',
         password: '',
@@ -41,7 +48,6 @@ const SignUpInstitution = () => {
     async function validateData(data: object){
         const schema = Yup.object().shape({
             userName: Yup.string().required('Nome obrigatório'),
-            inst: Yup.number().min(1),
             password: Yup.string().min(4, 'No mínimo 4 caracteres'),
         });
 
@@ -57,27 +63,28 @@ const SignUpInstitution = () => {
             const{userName, password} = formData;
             const tipo = 'I';
     
-            const institution = {
-                name: userName
-            }
-            const institutionResponse = await api.post<InstitutionResponse>('teaching-institution', institution);
-    
-           
+            
             const data = {
                 userName,
                 password,
                 teachingInstitution:{
-                    id:institutionResponse.data.id,
+                    id:0,
                 },
                 type:tipo
             }
 
             await validateData(data);
     
-            await api.post('user',data);
+            const response = await api.post('user', data);
+            
+            if(response.data.hasError === true){
+                addMessageToastError(response.data.messageError);
+                return;
+            }
             addMessageToast();
             history.push('/');
         } catch (error) {
+            console.log(error.message);
             addToast('Erro ao se cadastrar.', {
                 appearance: 'error',
                 autoDismiss: true,

@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import '../../styles/SignUp.css';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from "react-icons/fi";
@@ -9,9 +9,30 @@ import * as Yup from 'yup';
 import Logo from '../../assets/chart3.jpg';
 import Chart from '../../assets/chart2.png';
 
+interface institution{
+    name:String,
+    id:number,
+}
+interface User {
+    userName: String,
+    password: String,
+    type: String,
+    teachingInstitution: {
+        name: String;
+    }
+}
+
 const SignUp = () => {
     const { addToast } = useToasts();
     const history = useHistory();
+    const [institutions, setInstitutions] = useState<institution[]>([]);
+    const [selectedInstitution, setSelectedInstitution] = useState("0");
+
+    useEffect(() => {
+        api.get('teaching-institution').then(response => {
+            setInstitutions(response.data);
+        })
+    }, []);
 
     function addMessageToast() {
         addToast('Cadastrado com sucesso.', {
@@ -20,12 +41,17 @@ const SignUp = () => {
         })
     }
 
+    function addMessageToastError(message: String) {
+        addToast(message, {
+            appearance: 'error',
+            autoDismiss: true,
+        })
+    }
 
     const [formData, setFormData] = useState({
         userName: '',
         password: '',
     });
-    const [selectedInstitution, setSelectedInstitution] = useState("0");
 
     function handleSelectInstitution(event: ChangeEvent<HTMLSelectElement>) {
         const inst = event.target.value;
@@ -38,10 +64,12 @@ const SignUp = () => {
         setFormData({ ...formData, [name]: value });
     }
 
-    async function validateData(data: object){
+    async function validateData(data: object) {
         const schema = Yup.object().shape({
             userName: Yup.string().required('Nome obrigatório'),
-            inst: Yup.number().min(1),
+            teachingInstitution : Yup.object().shape( {
+                id: Yup.number().min(1),
+            }),
             password: Yup.string().min(4, 'No mínimo 4 caracteres'),
         });
 
@@ -70,7 +98,12 @@ const SignUp = () => {
 
             await validateData(data);
 
-            await api.post('user', data);
+            const response = await api.post('user', data);
+
+            if (response.data.hasError === true) {
+                addMessageToastError(response.data.messageError);
+                return;
+            }
             addMessageToast();
             history.push('/');
         } catch (error) {
@@ -95,10 +128,12 @@ const SignUp = () => {
                     <h1>Cadastro</h1>
                     <input name="userName" id="userName" onChange={handleInputChange} className="input" placeholder="Digite seu login"></input>
                     <input type="password" name="password" id="password" onChange={handleInputChange} className="input" placeholder="Digite sua senha"></input>
-                    <select name="institution" id="institution" onChange={handleSelectInstitution} className="select">
+                    
+                    <select name="institution" id="institution" value={selectedInstitution} onChange={handleSelectInstitution} className="select">
                         <option value="0">Escolha sua faculdade</option>
-                        <option value="1">FTT</option>
-                        <option value="2">Fatec</option>
+                        {institutions.map(inst => (
+                            <option key={inst.id} value={inst.id} >{inst.name}</option>
+                        ))}
                     </select>
                     <button type="submit">Cadastrar</button>
                 </form>
