@@ -62,42 +62,16 @@ public class UserRepository extends Repository<UserModel> {
 		super.delete(id);
 	}
 	
-	protected String getSQLFindAll() {
-		String sql = "SELECT ";
-		sql       += "  u.*, ";
-		sql       += "  ti.name AS nameInstitution ";
-		sql       += "FROM " + this.table + " AS u ";
-		sql       += "  LEFT JOIN tbTeachingInstitutions AS ti ";
-		sql       += "    ON ti.id = u.idTeachingInstitution;";
-		
-		return sql;
-	}
-	
 	@Override
-	protected String getSQLFindFirst(String field) {
-		String sql = "SELECT ";
-		sql       += "  u.*, ";
-		sql       += "  ti.name AS nameInstitution ";
-		sql       += "FROM " + this.table + " AS u ";
-		sql       += "  LEFT JOIN tbTeachingInstitutions AS ti ";
-		sql       += "    ON ti.id = u.idTeachingInstitution ";
-		sql       += "WHERE u." + field + " = ? ";
-		sql       += "LIMIT 1;";
-		
-		return sql;
-	}
-	
-	@Override
-	public UserModel fillModel(ResultSet resultSet) throws SQLException {
-		TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
-		teachingInstitutionModel.setId(resultSet.getInt("idTeachingInstitution"));
-		teachingInstitutionModel.setName(resultSet.getNString("nameInstitution"));
+	public UserModel fillModel(ResultSet resultSet) throws SQLException, ClassNotFoundException {
+		TeachingInstitutionRepository institutionRepository = new TeachingInstitutionRepository();
+		TeachingInstitutionModel institutionModel = institutionRepository.findFirst("id", resultSet.getInt("idTeachingInstitution"));
 		
 		UserModel userModel = new UserModel();
 		userModel.setId(resultSet.getInt("id"));
 		userModel.setType(resultSet.getString("type"));
 		userModel.setUserName(resultSet.getString("userName"));
-		userModel.setTeachingInstitution(teachingInstitutionModel);
+		userModel.setTeachingInstitution(institutionModel);
 		
 		return userModel;
 	}

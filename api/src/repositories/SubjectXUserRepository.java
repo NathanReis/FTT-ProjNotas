@@ -36,20 +36,20 @@ public class SubjectXUserRepository extends Repository<SubjectXUserModel> {
 	}
 	
 	@Override
-	public SubjectXUserModel fillModel(ResultSet resultSet) throws SQLException {
-		SubjectModel subjectModel = new SubjectModel();
-		subjectModel.setId(resultSet.getInt("idSubject"));
+	public SubjectXUserModel fillModel(ResultSet resultSet) throws SQLException, ClassNotFoundException {
+		SubjectRepository subjectRepository = new SubjectRepository();
+		SubjectModel subjectModel = subjectRepository.findFirst("id", resultSet.getInt("idSubject"));
 		
-		TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
-		teachingInstitutionModel.setId(resultSet.getInt("idTeachingInstitution"));
+		TeachingInstitutionRepository institutionRepository = new TeachingInstitutionRepository();
+		TeachingInstitutionModel institutionModel = institutionRepository.findFirst("id", resultSet.getInt("idTeachingInstitution"));
 		
-		UserModel userModel = new UserModel();
-		userModel.setId(resultSet.getInt("idUser"));
+		UserRepository userRepository = new UserRepository();
+		UserModel userModel = userRepository.findFirst("id", resultSet.getInt("idUser"));
 		
 		SubjectXUserModel subjectXUserModel = new SubjectXUserModel();
 		subjectXUserModel.setId(resultSet.getInt("id"));
 		subjectXUserModel.setSubject(subjectModel);
-		subjectXUserModel.setTeachingInstitution(teachingInstitutionModel);
+		subjectXUserModel.setTeachingInstitution(institutionModel);
 		subjectXUserModel.setUser(userModel);
 		subjectXUserModel.setGrade(resultSet.getDouble("grade"));
 		subjectXUserModel.setSemester(resultSet.getInt("semester"));
@@ -57,7 +57,7 @@ public class SubjectXUserRepository extends Repository<SubjectXUserModel> {
 		
 		return subjectXUserModel;
 	}
-
+	
 	@Override
 	public void update(SubjectXUserModel entity) throws SQLException, ClassNotFoundException {
 		String sql = "UPDATE " + this.table + " ";

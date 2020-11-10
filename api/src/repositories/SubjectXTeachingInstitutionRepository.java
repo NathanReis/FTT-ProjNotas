@@ -32,17 +32,17 @@ public class SubjectXTeachingInstitutionRepository extends Repository<SubjectXTe
 	}
 	
 	@Override
-	public SubjectXTeachingInstitutionModel fillModel(ResultSet resultSet) throws SQLException {
-		SubjectModel subjectModel = new SubjectModel();
-		subjectModel.setId(resultSet.getInt("idSubject"));
+	public SubjectXTeachingInstitutionModel fillModel(ResultSet resultSet) throws SQLException, ClassNotFoundException {
+		SubjectRepository subjectRepository = new SubjectRepository();
+		SubjectModel subjectModel = subjectRepository.findFirst("id", resultSet.getInt("idSubject"));
 		
-		TeachingInstitutionModel teachingInstitutionModel = new TeachingInstitutionModel();
-		teachingInstitutionModel.setId(resultSet.getInt("idTeachingInstitution"));
+		TeachingInstitutionRepository institutionRepository = new TeachingInstitutionRepository();
+		TeachingInstitutionModel institutionModel = institutionRepository.findFirst("id", resultSet.getInt("idTeachingInstitution"));
 		
 		SubjectXTeachingInstitutionModel subjectXTeachingInstitutionModel = new SubjectXTeachingInstitutionModel();
 		subjectXTeachingInstitutionModel.setId(resultSet.getInt("id"));
 		subjectXTeachingInstitutionModel.setSubject(subjectModel);
-		subjectXTeachingInstitutionModel.setTeachingInstitution(teachingInstitutionModel);
+		subjectXTeachingInstitutionModel.setTeachingInstitution(institutionModel);
 		subjectXTeachingInstitutionModel.setActive(resultSet.getString("active"));
 		
 		return subjectXTeachingInstitutionModel;

@@ -14,7 +14,7 @@ abstract public class Repository<TEntity extends Model> {
 	}
 	
 	abstract public void create(TEntity entity) throws SQLException, ClassNotFoundException;
-	abstract public TEntity fillModel(ResultSet resulSet) throws SQLException;
+	abstract public TEntity fillModel(ResultSet resulSet) throws SQLException, ClassNotFoundException;
 	abstract public void update(TEntity entity) throws SQLException, ClassNotFoundException;
 	
 	public void delete(int id) throws SQLException, ClassNotFoundException {
