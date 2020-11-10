@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a1b0ced0-59a5-4d85-b77b-918324462a04",
+		"_postman_id": "5debe548-acd0-46a1-917a-865da96fe513",
 		"name": "ProjNotasAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -271,18 +271,17 @@
 			],
 			"protocolProfileBehavior": {}
 		},
-		 
 		{
 			"name": "SubjectXTeachingInstitution",
-			"item":[
+			"item": [
 				{
-					"name": "Create SubjectXTeachingInstitution",
-					"request":{
+					"name": "Create",
+					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"subject\": {\n        \"id\": 0\n},\n    \"teachingInstitution\": {\n        \"id\": 1\n},\n        \"active\": \"A\"\n}",
+							"raw": "{\n    \"subject\": {\n        \"id\": 1\n    },\n    \"teachingInstitution\": {\n        \"id\": 1\n    },\n    \"active\": \"A\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -305,13 +304,13 @@
 					"response": []
 				},
 				{
-					"name": "Update SubjectXTeachingInstitution",
+					"name": "Update",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n     \"id\": 1,\n    \"subject\": {\n        \"id\": 0\n},\n     \"teachingInstitution\": {\n        \"id\": 1\n},\n    \"active\": \"I\"\n}",
+							"raw": "{\n    \"id\": 1,\n    \"active\": \"I\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -357,27 +356,6 @@
 					"name": "Show",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"subjectXTeachingInstitution",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution/1",

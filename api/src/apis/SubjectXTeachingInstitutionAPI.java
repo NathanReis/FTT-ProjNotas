@@ -39,10 +39,8 @@ public class SubjectXTeachingInstitutionAPI extends HttpServlet {
 			String parameters = request.getRequestURI().replaceFirst("^.*/subjectXTeachingInstitution/*", "");
 			
 			if(parameters.isBlank()) {
-				
 				this.subjectXTeachingInstitutionController.findAll(request, response);
 			} else if(parameters.matches("^\\d+$")) {
-				
 				this.subjectXTeachingInstitutionController.findFirst("id",Integer.parseInt(parameters),request,response);
 			} else {
 				response
@@ -79,25 +77,4 @@ public class SubjectXTeachingInstitutionAPI extends HttpServlet {
 		
 		this.subjectXTeachingInstitutionController.update(request, response, SubjectXTeachingInstitutionModel.class);
 	}
-
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		if(!request.getRequestURI().matches("^.*/subjectXTeachingInstitution/\\d+$")) {
-			
-			response
-				.getWriter()
-				.append("INVALID ROUTE DELETE");
-			return;
-		}
-		
-		int id = Integer.parseInt(request.getRequestURI().replaceFirst(".*/subjectXTeachingInstitution/+",""));
-		this.subjectXTeachingInstitutionController.delete(id, request, response);
-	}
-
 }

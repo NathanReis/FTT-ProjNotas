@@ -32,6 +32,9 @@ public class SubjectXTeachingInstitutionRepository extends Repository<SubjectXTe
 	}
 	
 	@Override
+	public void delete(int id) {}
+	
+	@Override
 	public SubjectXTeachingInstitutionModel fillModel(ResultSet resultSet) throws SQLException, ClassNotFoundException {
 		SubjectRepository subjectRepository = new SubjectRepository();
 		SubjectModel subjectModel = subjectRepository.findFirst("id", resultSet.getInt("idSubject"));
@@ -52,15 +55,13 @@ public class SubjectXTeachingInstitutionRepository extends Repository<SubjectXTe
 	public void update(SubjectXTeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
 		String sql = "UPDATE " + this.table + " ";
 		sql       += "SET ";
-		sql       += "  idSubject = ?, idTeachingInstitution = ?, active = ? ";
+		sql       += "  active = ? ";
 		sql       += "WHERE ";
 		sql       += "  id = ?;";
 		
 		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			stmt.setInt(1, entity.getSubject().getId());
-			stmt.setInt(2, entity.getTeachingInstitution().getId());
-			stmt.setString(3, entity.getActive());
-			stmt.setInt(4, entity.getId());
+			stmt.setString(1, entity.getActive());
+			stmt.setInt(2, entity.getId());
 			
 			stmt.executeUpdate();
 		}
