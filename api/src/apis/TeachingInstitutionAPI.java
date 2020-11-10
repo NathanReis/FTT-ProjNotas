@@ -75,7 +75,7 @@ public class TeachingInstitutionAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		this.teachingInstitutionController.update(request, response);
+		this.teachingInstitutionController.update(request, response, TeachingInstitutionModel.class);
 		
 		
 	}

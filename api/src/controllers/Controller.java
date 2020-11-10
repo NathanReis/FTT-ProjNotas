@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import helpers.JsonHelper;
 import models.ErrorModel;
 import models.Model;
+import models.UserModel;
 import repositories.ConnectionDB;
 import repositories.Repository;
 
@@ -47,15 +48,140 @@ abstract public class Controller<T extends Model> {
 		}
 	}
 	
-	abstract public void delete(int id, HttpServletRequest request, HttpServletResponse response) throws IOException;
+	 public void delete(int id, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		 
+		 try {
+				this.repository.delete(id);
+				
+				ConnectionDB.closeInstance();
+				
+				response
+					.getWriter()
+					.append("DELETE");
+				
+			} catch(Exception exception) {
+				ErrorModel error = new ErrorModel();
+				error.setHasError(true);
+				error.setMessageError(exception.getMessage());
+				response
+				.getWriter()
+				.append(this.gson.toJson(error));
+			}
+	 }
 	
-	abstract public void findAll(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	public void findAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		ArrayList<T> model = null;
+		
+		try {
+			model = this.repository.findAll();
+			
+			ConnectionDB.closeInstance();
+			
+			response
+				.getWriter()
+				.append(this.gson.toJson(model));
+			
+		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
+			response
+			.getWriter()
+			.append(this.gson.toJson(error));
+		}
+	}
 	
-	abstract public void findFirst(String field, double value, HttpServletRequest request, HttpServletResponse response)throws IOException; 
+	public void findFirst(String field, double value, HttpServletRequest request, HttpServletResponse response)throws IOException {
+		T model = null;
+		
+		try {
+			model = this.repository.findFirst(field, value);
+			
+			ConnectionDB.closeInstance();
+			
+			response
+				.getWriter()
+				.append(this.gson.toJson(model));
+			
+		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
+			response
+			.getWriter()
+			.append(this.gson.toJson(error));
+		}
+	} 
 	
-	abstract public void findFirst(String field, int value, HttpServletRequest request, HttpServletResponse response)throws IOException; 
+	public void findFirst(String field, int value, HttpServletRequest request, HttpServletResponse response)throws IOException {
+		
+		T model = null;
+		
+		try {
+			model = this.repository.findFirst(field, value);
+			
+			ConnectionDB.closeInstance();
+			
+			response
+				.getWriter()
+				.append(this.gson.toJson(model));
+			
+		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
+			response
+			.getWriter()
+			.append(this.gson.toJson(error));
+		}
+	} 
 	
-	abstract public void findFirst(String field, String value, HttpServletRequest request, HttpServletResponse response)throws IOException; 
+	public void findFirst(String field, String value, HttpServletRequest request, HttpServletResponse response)throws IOException {
+		
+		T model = null;
+		
+		try {
+			model = this.repository.findFirst(field, value);
+			
+			ConnectionDB.closeInstance();
+			
+			response
+				.getWriter()
+				.append(this.gson.toJson(model));
+			
+		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
+			response
+			.getWriter()
+			.append(this.gson.toJson(error));
+		}
+	} 
 	
-	abstract public void update(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	public void update(HttpServletRequest request, HttpServletResponse response,  Class<T> classType) throws IOException {
+		
+		try {
+			
+			String stringJson = JsonHelper.getJsonRequest(request);
+			T model = this.gson.fromJson(stringJson, classType);
+			
+			this.repository.update(model);
+			
+			ConnectionDB.closeInstance();
+			
+			response
+				.getWriter()
+				.append(this.gson.toJson(model));
+			
+		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
+			response
+			.getWriter()
+			.append(this.gson.toJson(error));
+		}
+	}
 }
