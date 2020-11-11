@@ -4,6 +4,7 @@ import api from '../../services/api';
 import '../../styles/EditStudent.css'
 import { Link, useHistory } from 'react-router-dom';
 import Logoff from '../../helpers/Logoff';
+import { useToasts } from 'react-toast-notifications'
 
 
 interface institution {
@@ -12,13 +13,13 @@ interface institution {
 }
 
 interface User {
-    id:number,
+    id: number,
     userName: String,
     password: String,
     type: String,
     teachingInstitution: {
         name: String,
-        id:number,
+        id: number,
     }
 }
 const EditStudent = () => {
@@ -27,6 +28,7 @@ const EditStudent = () => {
     const [selectedInstitution, setSelectedInstitution] = useState("0");
     const [user, setUser] = useState<User>();
     const history = useHistory();
+    const { addToast } = useToasts();
 
     useEffect(() => {
         api.get('teaching-institution').then(response => {
@@ -38,37 +40,60 @@ const EditStudent = () => {
         if (user) {
             const parsedUser = JSON.parse(user);
             setUser(parsedUser);
-            if(parsedUser.type === "I"){
+            if (parsedUser.type === "I") {
                 history.push('/home-institution')
             }
         }
-        else{
+        else {
             history.push('/');
             return;
         }
     }, []);
+
+    function addMessageToast() {
+        addToast('Alterado com sucesso.', {
+            appearance: 'success',
+            autoDismiss: true,
+        })
+    }
+
+    function addMessageToastError(message: String) {
+        addToast(message, {
+            appearance: 'error',
+            autoDismiss: true,
+        })
+    }
+
 
     function handleSelectInstitution(event: ChangeEvent<HTMLSelectElement>) {
         const inst = event.target.value;
         setSelectedInstitution(inst);
     }
 
-    async function handleEdit(){
+    async function handleEdit() {
         const inst = Number(selectedInstitution);
-        const data = {
-            id: user?.id,
-            userName: user?.userName,
-            password : "",
-            teachingInstitution: {
-                id: inst
-            },
-            type: 'A'
+
+        if (inst <= 0){
+            addMessageToastError("Selecione uma instituição.");
+            return;
         }
 
+            const data = {
+                id: user?.id,
+                userName: user?.userName,
+                password: "",
+                teachingInstitution: {
+                    id: inst
+                },
+                type: 'A'
+            }
+
         await api.put('user', data);
+        addMessageToast();
+        history.push('/home');
     }
 
-    async function handleDelete(){
+    async function handleDelete() {
         await api.delete(`/user/${user?.id}`);
         Logoff();
         history.push('/');
@@ -84,7 +109,7 @@ const EditStudent = () => {
                         <option key={inst.id} value={inst.id} >{inst.name}</option>
                     ))}
                 </select>
-                <button className="">Atualizar conta</button>
+                <button onClick={handleEdit}>Atualizar conta</button>
 
             </div>
             <button className="button-delete" onClick={handleDelete}>Apagar conta</button>

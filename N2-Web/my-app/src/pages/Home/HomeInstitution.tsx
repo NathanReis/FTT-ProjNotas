@@ -51,7 +51,7 @@ const HomeInstitution = () => {
                     <h2>Bem vindo {user?.userName}</h2>
                     <Link to="/subjects">Escolher matérias</Link>
                     <Link to="">Ver médias dos alunos</Link>
-                    <Link to="">Editar conta</Link>
+                    <Link to="/edit-institution">Editar conta</Link>
                     <button onClick={handleLogoff} className="button-custom">Logoff</button>
                 </div>
             </div>

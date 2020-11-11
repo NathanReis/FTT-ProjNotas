@@ -4,7 +4,7 @@ import api from '../../services/api';
 import '../../styles/EditInstitution.css'
 import { Link, useHistory } from 'react-router-dom';
 import Logoff from '../../helpers/Logoff';
-import { useToasts } from 'react-toast-notifications'
+import { useToasts } from 'react-toast-notifications';
 
 
 interface institution {

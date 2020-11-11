@@ -8,6 +8,7 @@ import Home from './pages/Home/Home';
 import HomeInstitution from './pages/Home/HomeInstitution';
 import Subjects from './pages/Subjects/Subjects';
 import EditStudent from './pages/Edit/EditStudent';
+import EditInstitution from './pages/Edit/EditInstitution';
 
 function Routes() {
     return (
@@ -20,6 +21,7 @@ function Routes() {
                 <Route path="/home-institution" component={HomeInstitution} />
                 <Route path="/subjects" component={Subjects} />
                 <Route path="/edit-student" component={EditStudent} />
+                <Route path="/edit-institution" component={EditInstitution} />
             </Switch>
         </BrowserRouter>
     )
