@@ -22,20 +22,15 @@ public class UserService extends Service<UserModel>{
 			UserModel model = userRepository.findFirst("id", userType.getId());
 			int idInalterado = model.getTeachingInstitution().getId();
 			
-			if(model.getUserName().equals(userType.getUserName())) {
+			if(!model.getUserName().equals(userType.getUserName())) {
 				
-				throw new IllegalArgumentException("Nome informado é o mesmo do atual");
+				this.ValidaUser(userType);
 			}
-			else if(model != null) {
+			if(idInalterado != userType.getTeachingInstitution().getId()) {
 				
-				if(idInalterado != userType.getTeachingInstitution().getId()) {
-					
-					throw new IllegalArgumentException("Não é permitido a alteração do id da instituição");
-				} else {
-
-					this.ValidaUser(userType);
-				}
-			}
+				throw new IllegalArgumentException("Não é permitido a alteração do id da instituição");
+			} 
+			
 		} else {
 			
 			throw new IllegalArgumentException("Usúario Aluno não pode ser alterado");
