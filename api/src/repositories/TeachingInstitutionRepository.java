@@ -3,9 +3,8 @@ package repositories;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import models.TeachingInstitutionModel;
-import services.TeachingInstitutionService;
+
 
 public class TeachingInstitutionRepository extends Repository<TeachingInstitutionModel> {
 	public TeachingInstitutionRepository() {
@@ -14,10 +13,6 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 
 	@Override
 	public void create(TeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
-		TeachingInstitutionService valida = new TeachingInstitutionService();
-		
-		valida.ValidaUser(entity);
-		
 		String sql = "INSERT INTO " + this.table + " ";
 		sql       += "  (name) ";
 		sql       += "VALUES ";
@@ -68,11 +63,7 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 	}
 
 	@Override
-	public void update(TeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
-		TeachingInstitutionService valida = new TeachingInstitutionService();
-		
-		valida.ValidaUser(entity);
-		
+	public void update(TeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {		
 		String sql = "UPDATE " + this.table + " ";
 		sql       += "SET ";
 		sql       += "  name = ? ";

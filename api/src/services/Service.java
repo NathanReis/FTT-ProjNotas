@@ -5,5 +5,6 @@ import models.Model;
 
 abstract public class Service <T extends Model>{
 	
-	abstract public void ValidaUser(T userName)throws SQLException, ClassNotFoundException;
+	public void ValidaUpdate(T userName)throws SQLException, ClassNotFoundException{};
+	public void ValidaUser(T userName)throws SQLException, ClassNotFoundException{};
 }

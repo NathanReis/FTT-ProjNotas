@@ -13,9 +13,10 @@ public class UserRepository extends Repository<UserModel> {
 		super("tbUsers");
 	}
 	
+	UserService valida = new UserService();
+	
 	@Override
 	public void create(UserModel user) throws SQLException, ClassNotFoundException {
-		UserService valida = new UserService();
 		
 		valida.ValidaUser(user);
 		
@@ -78,9 +79,7 @@ public class UserRepository extends Repository<UserModel> {
 	
 	@Override
 	public void update(UserModel user) throws SQLException, ClassNotFoundException {
-		UserService valida = new UserService();
-		
-		valida.ValidaUser(user);
+		valida.ValidaUpdate(user);
 		
 		String sql = "UPDATE " + this.table + " ";
 		sql       += "SET ";
