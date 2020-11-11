@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "34db7ade-9532-4df3-952c-099a82968912",
+		"_postman_id": "ec7163b2-1ccf-4237-a868-d732b8057676",
 		"name": "ProjNotasAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -386,7 +386,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"subject\": {\n        \"id\": 0\n},\n    \"teachingInstitution\": {\n        \"id\": 1\n},\n    \"user\": {\n        \"id\":1\n},\n    \"grade\": 1,\n    \"semester\": 1,\n    \"year\": 1\n}",
+							"raw": "{\n    \"subject\": {\n        \"id\": 1\n    },\n    \"teachingInstitution\": {\n        \"id\": 1\n    },\n    \"user\": {\n        \"id\":1\n    },\n    \"grade\": 10.0,\n    \"semester\": 1,\n    \"year\": 202\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -415,7 +415,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n     \"id\": 1,\n     \"subject\": {\n        \"id\": 0\n},\n    \"teachingInstitution\": {\n        \"id\": 1\n},\n    \"user\": {\n        \"id\":1\n},\n    \"grade\": 2,\n    \"semester\": 1,\n    \"year\": 1\n}",
+							"raw": "{\n    \"id\": 1,\n    \"subject\": {\n        \"id\": 100\n    },\n    \"teachingInstitution\": {\n        \"id\": 1\n    },\n    \"user\": {\n        \"id\":1\n    },\n    \"grade\": 2,\n    \"semester\": 1,\n    \"year\": 2020\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -541,6 +541,48 @@
 								"projnotas.api",
 								"subject",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subject-filter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subject-filter"
+							],
+							"query": [
+								{
+									"key": "description",
+									"value": "intr",
+									"disabled": true
+								},
+								{
+									"key": "idInstitution",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "qtd",
+									"value": "20",
+									"disabled": true
+								}
 							]
 						}
 					},
