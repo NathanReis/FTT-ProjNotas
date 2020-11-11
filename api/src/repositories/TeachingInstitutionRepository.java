@@ -69,6 +69,10 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 
 	@Override
 	public void update(TeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
+		TeachingInstitutionService valida = new TeachingInstitutionService();
+		
+		valida.ValidaUser(entity);
+		
 		String sql = "UPDATE " + this.table + " ";
 		sql       += "SET ";
 		sql       += "  name = ? ";

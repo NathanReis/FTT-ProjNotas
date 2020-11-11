@@ -78,6 +78,9 @@ public class UserRepository extends Repository<UserModel> {
 	
 	@Override
 	public void update(UserModel user) throws SQLException, ClassNotFoundException {
+		UserService valida = new UserService();
+		
+		valida.ValidaUser(user);
 		String sql = "UPDATE " + this.table + " ";
 		sql       += "SET ";
 		sql       += "  userName = ?, ";
