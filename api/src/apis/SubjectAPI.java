@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controllers.SubjectController;
-import models.SubjectModel;
-import models.SubjectXTeachingInstitutionModel;
 
 /**
  * Servlet implementation class SubjectAPI
@@ -40,10 +38,8 @@ public class SubjectAPI extends HttpServlet {
 			
 			if(parameters.isBlank()) {
 				this.subjectController.findAll(request, response);
-				
 			} else if(parameters.matches("^\\d+$")) {
 				this.subjectController.findFirst("id",Integer.parseInt(parameters),request,response);
-				
 			} else {
 				response
 					.getWriter()
@@ -57,45 +53,4 @@ public class SubjectAPI extends HttpServlet {
 				.append(exception.getMessage());
 		}
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		this.subjectController.create(request, response, SubjectModel.class);
-	}
-
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		this.subjectController.update(request, response, SubjectModel.class);
-	}
-
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(!request.getRequestURI().matches("^.*/subject/\\d+$")) {
-			// ! /user/1
-			
-			response
-				.getWriter()
-				.append("INVALID ROUTE DELETE");
-			
-			return;
-		}
-		int id = Integer.parseInt(request.getRequestURI().replaceFirst(".*/subject/+", ""));
-		this.subjectController.delete(id, request, response);
-	}
-
 }

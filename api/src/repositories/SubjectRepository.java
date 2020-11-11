@@ -11,7 +11,10 @@ public class SubjectRepository extends Repository<SubjectModel> {
 	}
 	
 	@Override
-	public void create(SubjectModel user) throws SQLException, ClassNotFoundException {}
+	public void create(SubjectModel user) {}
+	
+	@Override
+	public void delete(int id) {}
 	
 	@Override
 	public SubjectModel fillModel(ResultSet resultSet) throws SQLException {
@@ -23,5 +26,5 @@ public class SubjectRepository extends Repository<SubjectModel> {
 	}
 	
 	@Override
-	public void update(SubjectModel user) throws SQLException, ClassNotFoundException {} 
+	public void update(SubjectModel user) {} 
 }

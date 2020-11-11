@@ -81,6 +81,7 @@ public class UserRepository extends Repository<UserModel> {
 		UserService valida = new UserService();
 		
 		valida.ValidaUser(user);
+		
 		String sql = "UPDATE " + this.table + " ";
 		sql       += "SET ";
 		sql       += "  userName = ?, ";
