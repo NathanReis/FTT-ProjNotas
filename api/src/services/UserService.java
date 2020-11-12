@@ -1,8 +1,6 @@
 package services;
 
 import java.sql.SQLException;
-
-import models.TeachingInstitutionModel;
 import models.UserModel;
 import repositories.UserRepository;
 
@@ -20,21 +18,12 @@ public class UserService extends Service<UserModel>{
 			UserRepository userRepository = new UserRepository();
 			
 			UserModel model = userRepository.findFirst("id", userType.getId());
-			int idInalterado = model.getTeachingInstitution().getId();
 			
 			if(!model.getUserName().equals(userType.getUserName())) {
 				
 				this.ValidaUser(userType);
 			}
-			if(idInalterado != userType.getTeachingInstitution().getId()) {
-				
-				throw new IllegalArgumentException("Não é permitido a alteração do id da instituição");
-			} 
-			
-		} else {
-			
-			throw new IllegalArgumentException("Usúario Aluno não pode ser alterado");
-		}
+		} 
 	}
 
 	public void ValidaUser(UserModel userName) throws SQLException, ClassNotFoundException {
