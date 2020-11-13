@@ -30,7 +30,7 @@ public class SubjectRepository extends Repository<SubjectModel> {
 	@Override
 	public void update(SubjectModel user) {}
 	
-	public ArrayList<SubjectModel> filter(String description, int idInstitution, int page, int qtd) throws SQLException, ClassNotFoundException {
+	public ArrayList<SubjectModel> filterForInstitutions(String description, int idInstitution, int page, int qtd) throws SQLException, ClassNotFoundException {
 		ArrayList<SubjectModel> subjects = new ArrayList<SubjectModel>();
 		
 		Boolean hasWhere = false;
@@ -65,6 +65,39 @@ public class SubjectRepository extends Repository<SubjectModel> {
 				}
 			} else if(idInstitution != 0) {
 				stmt.setInt(1, idInstitution);
+			}
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				subjects.add(this.fillModel(rs));
+			}
+		}
+		
+		return subjects;
+	}
+	
+	public ArrayList<SubjectModel> filterForStudents(int idUser, String description, int page, int qtd) throws SQLException, ClassNotFoundException {
+		ArrayList<SubjectModel> subjects = new ArrayList<SubjectModel>();
+		
+		String sql = "SELECT s.* ";
+		sql       += "FROM " + this.table + " AS s ";
+		sql       += "  INNER JOIN tbSubjectsXUsers AS sxu ";
+		sql       += "    ON sxu.idSubject = s.id ";
+		sql       += "WHERE sxu.idUser = ? ";
+		
+		if(!description.equals("")) {
+			sql += "  AND s.description LIKE ? ";
+		}
+		
+		sql += "LIMIT " + (page * qtd - qtd) + ", " + qtd + ";";
+		
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+			stmt.setInt(1, idUser);
+			
+			if(!description.equals("")) {
+				description = "%" + description + "%";
+				stmt.setString(2, description);
 			}
 			
 			ResultSet rs = stmt.executeQuery();

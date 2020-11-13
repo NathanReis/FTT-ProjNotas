@@ -24,7 +24,7 @@ public class SubjectController extends Controller<SubjectModel>{
 	@Override
 	public void update(HttpServletRequest request, HttpServletResponse response,  Class<SubjectModel> classType) {}
 	
-	public void filter(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void filterForInstitutions(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
 			String description = "";
 			int idInstitution = 0;
@@ -53,7 +53,55 @@ public class SubjectController extends Controller<SubjectModel>{
 				}
 			}
 			
-			ArrayList<SubjectModel> subjects = ((SubjectRepository)this.repository).filter(description, idInstitution, page, qtd);
+			ArrayList<SubjectModel> subjects = ((SubjectRepository)this.repository).filterForInstitutions(description, idInstitution, page, qtd);
+			
+			response
+				.getWriter()
+				.append(this.gson.toJson(subjects));
+		} catch(Exception exception) {
+			ErrorModel errorModel = new ErrorModel();
+			errorModel.setHasError(true);
+			errorModel.setMessageError(exception.getMessage());
+			
+			response
+				.getWriter()
+				.append(this.gson.toJson(errorModel));
+		}
+	}
+	
+	public void filterForStudents(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try {
+			String maybeIdUser = request.getRequestURI().replaceFirst("^.*/subject-student-filter/*", "");
+			int idUser = 0;
+			
+			if(maybeIdUser.matches("^\\d+$")) {
+				idUser = Integer.parseInt(maybeIdUser);
+			}
+			
+			String description = "";
+			int page = 1;
+			int qtd = 20;
+			
+			if(request.getQueryString() != null) {
+				String[] queryParams = request.getQueryString().split("&");
+				int iMax = queryParams.length;
+				
+				String rgxDescription = "^description=";
+				String rgxPage = "^page=";
+				String rgxqtd = "^qtd=";
+				
+				for(int i = 0; i < iMax; i++) {
+					if(queryParams[i].matches(rgxDescription + ".*")) {
+						description = queryParams[i].replaceFirst(rgxDescription, "");
+					} else if(queryParams[i].matches(rgxPage + ".*")) {
+						page = Integer.parseInt(queryParams[i].replaceFirst(rgxPage, ""));
+					} else if(queryParams[i].matches(rgxqtd + ".*")) {
+						qtd = Integer.parseInt(queryParams[i].replaceFirst(rgxqtd, ""));
+					}
+				}
+			}
+			
+			ArrayList<SubjectModel> subjects = ((SubjectRepository)this.repository).filterForStudents(idUser, description, page, qtd);
 			
 			response
 				.getWriter()

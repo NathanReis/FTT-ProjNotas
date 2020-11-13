@@ -12,8 +12,8 @@ import controllers.SubjectController;
 /**
  * Servlet implementation class SubjectFilterAPI
  */
-@WebServlet("/subject-filter")
-public class SubjectFilterAPI extends HttpServlet {
+@WebServlet("/subject-institution-filter")
+public class SubjectInstitutionFilterAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private SubjectController subjectController = new SubjectController();
@@ -21,7 +21,7 @@ public class SubjectFilterAPI extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SubjectFilterAPI() {
+    public SubjectInstitutionFilterAPI() {
         super();
     }
 
@@ -34,7 +34,7 @@ public class SubjectFilterAPI extends HttpServlet {
 		response.setContentType("application/json");
 		
 		try {
-			this.subjectController.filter(request, response);
+			this.subjectController.filterForInstitutions(request, response);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
