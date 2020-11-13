@@ -1,0 +1,48 @@
+#chart-container{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    background: #dde3ef;
+}
+
+#chart-container .side-menu{
+    width: 20%;
+    background-color: rgb(27 33 45);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+#chart-container .side-menu img{
+    border-radius: 50%;
+    width: 60%;
+    margin-bottom: 30px;
+}
+.side-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50%;
+}
+.side-container a{
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    margin-top: 5px;
+}
+.side-container h2{
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 10%;
+}
+
+.bar{
+    padding: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10%;
+}

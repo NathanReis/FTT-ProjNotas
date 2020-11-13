@@ -9,6 +9,8 @@ import HomeInstitution from './pages/Home/HomeInstitution';
 import Subjects from './pages/Subjects/Subjects';
 import EditStudent from './pages/Edit/EditStudent';
 import EditInstitution from './pages/Edit/EditInstitution';
+import Grades from './pages/Grades/Grades';
+import StudentsChart from './pages/Charts/StudentsChart';
 
 function Routes() {
     return (
@@ -22,6 +24,8 @@ function Routes() {
                 <Route path="/subjects" component={Subjects} />
                 <Route path="/edit-student" component={EditStudent} />
                 <Route path="/edit-institution" component={EditInstitution} />
+                <Route path="/student-grades" component={Grades} />
+                <Route path="/student-chart" component={StudentsChart} />
             </Switch>
         </BrowserRouter>
     )

@@ -23,7 +23,7 @@ interface Subject {
     description: string
 }
 
-const Subjects = () => {
+const Grades = () => {
     const [user, setUser] = useState<User>();
     const [filter, setFilter] = useState<string>("");
     const [page, setPage] = useState<number>(1);
@@ -31,7 +31,7 @@ const Subjects = () => {
     const [selectedSubjects, setSelectedSubjects] = useState<number[]>([]);
     const history = useHistory();
 
-    // const subjects = ['Fisica', 'Calculo', 'Algoritmos', 'LP']
+    const subjects2 = ['Fisica', 'Calculo', 'Algoritmos', 'LP']
 
     useEffect(() => {
         const user = localStorage.getItem('@FTT:user');
@@ -45,7 +45,7 @@ const Subjects = () => {
             return;
         }
 
-        loadSubjects();
+        // loadSubjects();
 
     }, []);
 
@@ -108,12 +108,12 @@ const Subjects = () => {
                     <img alt="user" src={User} />
                     <h4>Bem vindo {user?.userName}</h4>
                     <Link to="/home">Home</Link>
-                    <Link to="/student-grades">Cadastrar notas</Link>
+                    <Link to="/subjects">Escolher matérias</Link>
                     <Link to="/student-chart">Ver médias</Link>
                     <Link to="/edit-student">Editar conta</Link>
                     <button onClick={handleLogoff} className="button-custom">Logoff</button>
                     <br></br>
-                    <button onClick={saveSubjects} className="btn btn-info">Salvar matérias</button>
+                    <button onClick={saveSubjects} className="btn btn-info">Salvar notas</button>
                 </div>
             </div>
             <div className="main-container">
@@ -128,17 +128,23 @@ const Subjects = () => {
                     <Table striped bordered hover>
                         <thead>
                             <tr>
-                                <th>Selecionar</th>
                                 <th>Matéria</th>
-
+                                <th>Informe sua nota (média)</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            {subjects.map(subj =>
+                            {/* {subjects2.map(subj =>
                                 <tr>
                                     <td><input onChange={() => handleChange(subj.id)} type="checkbox"></input></td>
                                     <td key={subj.id} >{subj.description}</td>
+                                    <td><input type="text" /></td>
+                                </tr>)} */}
+
+                                {subjects2.map(subj =>
+                                <tr>
+                                    <td>{subj}</td>
+                                    <td><input type="number" min={0} max={10} /></td>
                                 </tr>)}
 
                             {/* <tr>
@@ -171,4 +177,4 @@ const Subjects = () => {
     )
 }
 
-export default Subjects;
+export default Grades;

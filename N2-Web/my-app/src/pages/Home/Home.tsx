@@ -53,8 +53,8 @@ const Home = () => {
                     <img alt="user" src={User} />
                     <h2>Bem vindo {user?.userName}</h2>
                     <Link to="/subjects">Escolher matérias</Link>
-                    <Link to="">Cadastrar notas</Link>
-                    <Link to="">Ver médias</Link>
+                    <Link to="/student-grades">Cadastrar notas</Link>
+                    <Link to="/student-chart">Ver médias</Link>
                     <Link to="/edit-student">Editar conta</Link>
                     <button onClick={handleLogoff} className="button-custom">Logoff</button>
                 </div>
