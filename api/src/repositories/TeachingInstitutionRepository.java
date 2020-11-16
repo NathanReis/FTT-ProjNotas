@@ -3,6 +3,8 @@ package repositories;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import models.SubjectInstitutionModel;
 import models.TeachingInstitutionModel;
 
 
@@ -75,6 +77,35 @@ public class TeachingInstitutionRepository extends Repository<TeachingInstitutio
 			stmt.setInt(2, entity.getId());
 			
 			stmt.executeUpdate();
+		}
+	}
+
+	public void addSubjects(TeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
+		for(SubjectInstitutionModel subjectnstitution : entity.getSubjects()) {
+			String sql = "DELETE FROM tbSubjectsXTeachingInstitutions ";
+			sql       += "WHERE ";
+			sql       += "  idSubject = ? AND ";
+			sql       += "  idTeachingInstitution = ?;";
+			
+			try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+				stmt.setInt(1, subjectnstitution.getSubject().getId());
+				stmt.setInt(2, entity.getId());
+				
+				stmt.executeUpdate();
+			}
+			
+			sql  = "INSERT INTO tbSubjectsXTeachingInstitutions ";
+			sql += "  (idSubject, idTeachingInstitution, active) ";
+			sql += "VALUES ";
+			sql += "  (?, ?, ?);";
+			
+			try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+				stmt.setInt(1, subjectnstitution.getSubject().getId());
+				stmt.setInt(2, entity.getId());
+				stmt.setString(3, "A");
+				
+				stmt.executeUpdate();
+			}
 		}
 	}
 }

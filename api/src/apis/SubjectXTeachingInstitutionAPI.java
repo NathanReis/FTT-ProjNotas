@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controllers.SubjectXTeachingInstitutionController;
-import models.SubjectXTeachingInstitutionModel;
 
 /**
  * Servlet implementation class SubjectXTeachingInstitutionAPI
@@ -28,35 +27,6 @@ public class SubjectXTeachingInstitutionAPI extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		try {
-			String parameters = request.getRequestURI().replaceFirst("^.*/subjectXTeachingInstitution/*", "");
-			
-			if(parameters.isBlank()) {
-				this.subjectXTeachingInstitutionController.findAll(request, response);
-			} else if(parameters.matches("^\\d+$")) {
-				this.subjectXTeachingInstitutionController.findFirst("id",Integer.parseInt(parameters),request,response);
-			} else {
-				response
-					.getWriter()
-					.append("INVALID ROUTE GET");
-				
-				return;
-			}
-		} catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,18 +34,6 @@ public class SubjectXTeachingInstitutionAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		this.subjectXTeachingInstitutionController.create(request, response, SubjectXTeachingInstitutionModel.class);
+		this.subjectXTeachingInstitutionController.addSubjects(request, response);
 	}
-
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		this.subjectXTeachingInstitutionController.update(request, response, SubjectXTeachingInstitutionModel.class);
-	}
-	
 }

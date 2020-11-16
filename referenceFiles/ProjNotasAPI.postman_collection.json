@@ -275,13 +275,13 @@
 			"name": "SubjectXTeachingInstitution",
 			"item": [
 				{
-					"name": "Create",
+					"name": "Add subjects",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"subject\": {\n        \"id\": 1\n    },\n    \"teachingInstitution\": {\n        \"id\": 1\n    },\n    \"active\": \"A\"\n}",
+							"raw": "{\n    \"id\": 1,\n    \"subjects\": [\n        {\n            \"subject\": {\n                \"id\": 1\n            }\n        },\n        {\n            \"subject\": {\n                \"id\": 2\n            }\n        },\n        {\n            \"subject\": {\n                \"id\": 3\n            }\n        },\n        {\n            \"subject\": {\n                \"id\": 4\n            }\n        },\n        {\n            \"subject\": {\n                \"id\": 5\n            }\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -298,76 +298,6 @@
 							"path": [
 								"projnotas.api",
 								"subjectXTeachingInstitution"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": 1,\n    \"active\": \"I\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"subjectXTeachingInstitution"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"subjectXTeachingInstitution"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subjectXTeachingInstitution/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"subjectXTeachingInstitution",
-								"1"
 							]
 						}
 					},
@@ -547,12 +477,12 @@
 					"response": []
 				},
 				{
-					"name": "Filter",
+					"name": "Filter for institutions",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subject-filter",
+							"raw": "http://localhost:8080/projnotas.api/subject-institution-filter",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -560,17 +490,55 @@
 							"port": "8080",
 							"path": [
 								"projnotas.api",
-								"subject-filter"
+								"subject-institution-filter"
 							],
 							"query": [
 								{
 									"key": "description",
-									"value": "intr",
+									"value": "",
 									"disabled": true
 								},
 								{
 									"key": "idInstitution",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "page",
 									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "qtd",
+									"value": "20",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter for students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/subject-student-filter/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"subject-student-filter",
+								"3"
+							],
+							"query": [
+								{
+									"key": "description",
+									"value": "",
 									"disabled": true
 								},
 								{

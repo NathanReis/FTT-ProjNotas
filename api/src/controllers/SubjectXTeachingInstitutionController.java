@@ -1,16 +1,42 @@
 package controllers;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.SubjectXTeachingInstitutionModel;
-import repositories.SubjectXTeachingInstitutionRepository;
+import com.google.gson.Gson;
 
-public class SubjectXTeachingInstitutionController extends Controller<SubjectXTeachingInstitutionModel>{
-	public SubjectXTeachingInstitutionController() {
-		super(new SubjectXTeachingInstitutionRepository());
-	}
+import helpers.JsonHelper;
+import models.ErrorModel;
+import models.TeachingInstitutionModel;
+import repositories.ConnectionDB;
+import repositories.TeachingInstitutionRepository;
+
+public class SubjectXTeachingInstitutionController {
+	private Gson gson = new Gson();
 	
-	@Override
-	public void delete(int id, HttpServletRequest request, HttpServletResponse response) {}
+	public void addSubjects(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		try {
+			String stringJson = JsonHelper.getJsonRequest(request);
+			TeachingInstitutionModel model = this.gson.fromJson(stringJson, TeachingInstitutionModel.class);
+			
+			TeachingInstitutionRepository repository = new TeachingInstitutionRepository();
+			repository.addSubjects(model);
+			
+			ConnectionDB.closeInstance();
+			
+			response
+				.getWriter()
+				.append(this.gson.toJson("Inserido"));
+		} catch(Exception exception) {
+			ErrorModel error = new ErrorModel();
+			error.setHasError(true);
+			error.setMessageError(exception.getMessage());
+			
+			response
+				.getWriter()
+				.append(this.gson.toJson(error));
+		}
+	}
 }

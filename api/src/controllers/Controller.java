@@ -154,7 +154,7 @@ abstract public class Controller<T extends Model> {
 		}
 	} 
 	
-	public void update(HttpServletRequest request, HttpServletResponse response,  Class<T> classType) throws IOException {
+	public void update(HttpServletRequest request, HttpServletResponse response, Class<T> classType) throws IOException {
 		try {
 			String stringJson = JsonHelper.getJsonRequest(request);
 			T model = this.gson.fromJson(stringJson, classType);

@@ -1,6 +1,6 @@
 package models;
 
-public class SubjectsInstitutionModel {
+public class SubjectInstitutionModel {
 	private SubjectModel subject;
 	private String active;
 	

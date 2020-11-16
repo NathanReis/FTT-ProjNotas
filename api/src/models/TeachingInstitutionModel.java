@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TeachingInstitutionModel extends Model {
 	private String name;
-	private ArrayList<SubjectsInstitutionModel> subjects = new ArrayList<SubjectsInstitutionModel>();
+	private ArrayList<SubjectInstitutionModel> subjects = new ArrayList<SubjectInstitutionModel>();
 	
 	public String getName() {
 		return this.name;
@@ -14,11 +14,11 @@ public class TeachingInstitutionModel extends Model {
 		this.name = name;
 	}
 	
-	public ArrayList<SubjectsInstitutionModel> getSubjects() {
+	public ArrayList<SubjectInstitutionModel> getSubjects() {
 		return this.subjects;
 	}
 	
-	public void addSubject(SubjectsInstitutionModel subject) {
+	public void addSubject(SubjectInstitutionModel subject) {
 		this.subjects.add(subject);
 	}
 }
