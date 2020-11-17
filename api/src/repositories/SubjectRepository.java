@@ -30,41 +30,29 @@ public class SubjectRepository extends Repository<SubjectModel> {
 	@Override
 	public void update(SubjectModel user) {}
 	
-	public ArrayList<SubjectModel> filterForInstitutions(String description, int idInstitution, int page, int qtd) throws SQLException, ClassNotFoundException {
+	public ArrayList<SubjectModel> institutionChoosesSubjects(int idInstitution, String description, int page, int qtd) throws SQLException, ClassNotFoundException {
 		ArrayList<SubjectModel> subjects = new ArrayList<SubjectModel>();
 		
-		Boolean hasWhere = false;
 		String sql = "SELECT s.* ";
 		sql       += "FROM " + this.table + " AS s ";
-		
-		if(idInstitution != 0) {
-			sql += "  INNER JOIN tbSubjectsXTeachingInstitutions AS sxti ";
-			sql += "    ON sxti.idSubject = s.id ";
-		}
+		sql       += "WHERE s.id NOT IN (";
+		sql       += "  SELECT sxti.idSubject ";
+		sql       += "  FROM tbSubjectsXTeachingInstitutions AS sxti ";
+		sql       += "  WHERE sxti.idTeachingInstitution = ?";
+		sql       += ") ";
 		
 		if(!description.equals("")) {
-			sql += (hasWhere ? "AND" : "WHERE") + " s.description LIKE ? ";
-			hasWhere = true;
-		}
-		
-		if(idInstitution != 0) {
-			sql += (hasWhere ? "AND" : "WHERE") + " sxti.idTeachingInstitution = ? ";
-			sql += "AND sxti.active = 'A' ";
-			hasWhere = true;
+			sql += "AND s.description LIKE ? ";
 		}
 		
 		sql += "LIMIT " + (page * qtd - qtd) + ", " + qtd + ";";
 		
 		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+			stmt.setInt(1, idInstitution);
+			
 			if(!description.equals("")) {
 				description = "%" + description + "%";
-				stmt.setString(1, description);
-				
-				if(idInstitution != 0) {
-					stmt.setInt(2, idInstitution);
-				}
-			} else if(idInstitution != 0) {
-				stmt.setInt(1, idInstitution);
+				stmt.setString(2, description);
 			}
 			
 			ResultSet rs = stmt.executeQuery();

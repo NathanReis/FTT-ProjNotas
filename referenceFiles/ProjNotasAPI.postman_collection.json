@@ -302,6 +302,35 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Toggle active subject",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idTeachingInstitution\": 1,\n    \"idSubject\": 1,\n    \"active\": \"I\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/projnotas.api/toggle-active-subject",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"projnotas.api",
+								"toggle-active-subject"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -475,14 +504,20 @@
 						}
 					},
 					"response": []
-				},
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Filters",
+			"item": [
 				{
-					"name": "Filter for institutions",
+					"name": "Institution chooses subjects",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subject-institution-filter",
+							"raw": "http://localhost:8080/projnotas.api/institution-chooses-subjects/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -490,16 +525,12 @@
 							"port": "8080",
 							"path": [
 								"projnotas.api",
-								"subject-institution-filter"
+								"institution-chooses-subjects",
+								"1"
 							],
 							"query": [
 								{
 									"key": "description",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "idInstitution",
 									"value": "",
 									"disabled": true
 								},

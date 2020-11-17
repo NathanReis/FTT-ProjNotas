@@ -9,19 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import controllers.SubjectController;
 
-/**
- * Servlet implementation class SubjectFilterAPI
- */
-@WebServlet("/subject-institution-filter")
-public class SubjectInstitutionFilterAPI extends HttpServlet {
+@WebServlet("/institution-chooses-subjects/*")
+public class InstitutionChoosesSubjectsAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	private SubjectController subjectController = new SubjectController();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SubjectInstitutionFilterAPI() {
+    public InstitutionChoosesSubjectsAPI() {
         super();
     }
 
@@ -34,7 +29,8 @@ public class SubjectInstitutionFilterAPI extends HttpServlet {
 		response.setContentType("application/json");
 		
 		try {
-			this.subjectController.filterForInstitutions(request, response);
+			SubjectController subjectController = new SubjectController(); 
+			subjectController.institutionChoosesSubjects(request, response);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

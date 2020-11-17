@@ -24,10 +24,18 @@ public class SubjectController extends Controller<SubjectModel>{
 	@Override
 	public void update(HttpServletRequest request, HttpServletResponse response,  Class<SubjectModel> classType) {}
 	
-	public void filterForInstitutions(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void institutionChoosesSubjects(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		try {
-			String description = "";
+			String maybeIdInstitution = request.getRequestURI().replaceFirst("^.*/institution-chooses-subjects/*", "");
 			int idInstitution = 0;
+			
+			if(maybeIdInstitution.matches("^\\d+$")) {
+				idInstitution = Integer.parseInt(maybeIdInstitution);
+			} else {
+				throw new Exception("Your route is invalid");
+			}
+			
+			String description = "";
 			int page = 1;
 			int qtd = 20;
 			
@@ -36,15 +44,12 @@ public class SubjectController extends Controller<SubjectModel>{
 				int iMax = queryParams.length;
 				
 				String rgxDescription = "^description=";
-				String rgxIdInstitution = "^idInstitution=";
 				String rgxPage = "^page=";
 				String rgxqtd = "^qtd=";
 				
 				for(int i = 0; i < iMax; i++) {
 					if(queryParams[i].matches(rgxDescription + ".*")) {
 						description = queryParams[i].replaceFirst(rgxDescription, "");
-					} else if(queryParams[i].matches(rgxIdInstitution + ".*")) {
-						idInstitution = Integer.parseInt(queryParams[i].replaceFirst(rgxIdInstitution, ""));
 					} else if(queryParams[i].matches(rgxPage + ".*")) {
 						page = Integer.parseInt(queryParams[i].replaceFirst(rgxPage, ""));
 					} else if(queryParams[i].matches(rgxqtd + ".*")) {
@@ -53,7 +58,7 @@ public class SubjectController extends Controller<SubjectModel>{
 				}
 			}
 			
-			ArrayList<SubjectModel> subjects = ((SubjectRepository)this.repository).filterForInstitutions(description, idInstitution, page, qtd);
+			ArrayList<SubjectModel> subjects = ((SubjectRepository)this.repository).institutionChoosesSubjects(idInstitution, description, page, qtd);
 			
 			response
 				.getWriter()

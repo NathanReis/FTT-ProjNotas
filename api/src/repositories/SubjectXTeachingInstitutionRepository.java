@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import models.SubjectModel;
 import models.SubjectXTeachingInstitutionModel;
 import models.TeachingInstitutionModel;
+import models.ToggleActiveModel;
 
 public class SubjectXTeachingInstitutionRepository extends Repository<SubjectXTeachingInstitutionModel> {
 	public SubjectXTeachingInstitutionRepository() {
@@ -14,22 +15,7 @@ public class SubjectXTeachingInstitutionRepository extends Repository<SubjectXTe
 	}
 
 	@Override
-	public void create(SubjectXTeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
-		String sql = "INSERT INTO " + this.table + " ";
-		sql       += "  (idSubject, idTeachingInstitution, active) ";
-		sql       += "VALUES ";
-		sql       += "  (?, ?, ?);";
-		
-		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			stmt.setInt(1, entity.getSubject().getId());
-			stmt.setInt(2, entity.getTeachingInstitution().getId());
-			stmt.setString(3, "A");
-			
-			stmt.executeUpdate();
-		}
-		
-		entity.setId(this.getInsertedId());
-	}
+	public void create(SubjectXTeachingInstitutionModel entity) {}
 	
 	@Override
 	public void delete(int id) {}
@@ -52,18 +38,22 @@ public class SubjectXTeachingInstitutionRepository extends Repository<SubjectXTe
 	}
 
 	@Override
-	public void update(SubjectXTeachingInstitutionModel entity) throws SQLException, ClassNotFoundException {
+	public void update(SubjectXTeachingInstitutionModel entity) {}
+	
+	public void toggleActive(ToggleActiveModel toggleActiveModel) throws ClassNotFoundException, SQLException {
 		String sql = "UPDATE " + this.table + " ";
 		sql       += "SET ";
 		sql       += "  active = ? ";
 		sql       += "WHERE ";
-		sql       += "  id = ?;";
+		sql       += "  idTeachingInstitution = ? AND";
+		sql       += "  idSubject = ?;";
 		
 		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
-			stmt.setString(1, entity.getActive());
-			stmt.setInt(2, entity.getId());
-			
-			stmt.executeUpdate();
+			 stmt.setString(1, toggleActiveModel.getActive());
+			 stmt.setInt(2, toggleActiveModel.getIdTeachingInstitution());
+			 stmt.setInt(3, toggleActiveModel.getIdSubject());
+			 
+			 stmt.executeUpdate();
 		}
 	}
 }

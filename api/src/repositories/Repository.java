@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import models.GradeIdUserModel;
 import models.Model;
 
 abstract public class Repository<TEntity extends Model> {
@@ -129,5 +128,4 @@ abstract public class Repository<TEntity extends Model> {
 		
 		return sql;
 	}
-
 }
