@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import models.SubjectInstitutionModel;
 import models.SubjectModel;
 
 public class SubjectRepository extends Repository<SubjectModel> {
@@ -59,6 +60,45 @@ public class SubjectRepository extends Repository<SubjectModel> {
 			
 			while(rs.next()) {
 				subjects.add(this.fillModel(rs));
+			}
+		}
+		
+		return subjects;
+	}
+	
+	public ArrayList<SubjectInstitutionModel> subjectsInstitution(int idInstitution, String description, int page, int qtd) throws SQLException, ClassNotFoundException {
+		ArrayList<SubjectInstitutionModel> subjects = new ArrayList<SubjectInstitutionModel>();
+		
+		String sql = "SELECT ";
+		sql       += "  s.*, ";
+		sql       += "  sxti.active ";
+		sql       += "FROM tbSubjectsXTeachingInstitutions AS sxti ";
+		sql       += "  INNER JOIN " + this.table + " AS s ";
+		sql       += "    ON s.id = sxti.idSubject ";
+		sql       += "WHERE sxti.idTeachingInstitution = ? ";
+		
+		if(!description.equals("")) {
+			sql += "AND s.description LIKE ? ";
+		}
+		
+		sql += "LIMIT " + (page * qtd - qtd) + ", " + qtd + ";";
+		
+		try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+			stmt.setInt(1, idInstitution);
+			
+			if(!description.equals("")) {
+				description = "%" + description + "%";
+				stmt.setString(2, description);
+			}
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				SubjectInstitutionModel subjectInstitutionModel = new SubjectInstitutionModel();
+				subjectInstitutionModel.setSubject(this.fillModel(rs));
+				subjectInstitutionModel.setActive(rs.getString("active"));
+				
+				subjects.add(subjectInstitutionModel);
 			}
 		}
 		
