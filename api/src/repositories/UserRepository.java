@@ -3,8 +3,10 @@ package repositories;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.GregorianCalendar;
 
 import models.TeachingInstitutionModel;
+import models.UserInstitutionModel;
 import models.UserModel;
 import services.UserService;
 
@@ -101,6 +103,55 @@ public class UserRepository extends Repository<UserModel> {
 			
 			TeachingInstitutionRepository teachingInstitutionRepository = new TeachingInstitutionRepository();
 			teachingInstitutionRepository.update(user.getTeachingInstitution());
+		}
+	}
+
+	public void addSubjects(UserModel entity) throws SQLException, ClassNotFoundException {
+		GregorianCalendar calendar = new GregorianCalendar();
+		
+		int month = calendar.get(GregorianCalendar.MONTH);
+		System.out.println(month);
+		int year = calendar.get(GregorianCalendar.YEAR);
+		System.out.println(year);
+		int semester = 1;
+		
+		// Janeiro é 0
+		// Então o mês 6 para humanos é 5 para o Java
+		if(month > 5) {
+			semester = 2;
+		}
+		System.out.println(semester);
+		
+		for(UserInstitutionModel userInstitution : entity.getSubjects()) {
+			String sql = "DELETE FROM tbSubjectsXUsers ";
+			sql       += "WHERE ";
+			sql       += "  idSubject = ? AND ";
+			sql       += "  idTeachingInstitution = ? AND ";
+			sql       += "  idUser = ?;";
+
+			try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+				stmt.setInt(1, userInstitution.getSubject().getId());
+				stmt.setInt(2, entity.getTeachingInstitution().getId());
+				stmt.setInt(3, entity.getId());
+				
+				stmt.executeUpdate();
+			}
+			
+			sql  = "INSERT INTO tbSubjectsXUsers ";
+			sql += "  (idSubject, idTeachingInstitution, idUser, grade, semester, year) ";
+			sql += "VALUES ";
+			sql += "  (?, ?, ?, ?, ?, ?);";
+			
+			try(PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)) {
+				stmt.setInt(1, userInstitution.getSubject().getId());
+				stmt.setInt(2, entity.getTeachingInstitution().getId());
+				stmt.setInt(3, entity.getId());
+				stmt.setDouble(4, 0);
+				stmt.setInt(5, semester);
+				stmt.setInt(6, year);
+				
+				stmt.executeUpdate();
+			}
 		}
 	}
 }

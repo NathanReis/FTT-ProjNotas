@@ -339,13 +339,13 @@
 			"name": "SubjectXUser",
 			"item": [
 				{
-					"name": "Create",
+					"name": "Add subjects",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"subject\": {\n        \"id\": 1\n    },\n    \"teachingInstitution\": {\n        \"id\": 1\n    },\n    \"user\": {\n        \"id\":1\n    },\n    \"grade\": 10.0,\n    \"semester\": 1,\n    \"year\": 202\n}",
+							"raw": "{\n    \"id\": 3,\n    \"teachingInstitution\": {\n        \"id\": 1\n    },\n    \"subjects\": [\n        {\n            \"subject\": {\n                \"id\": 1\n            }\n        },\n        {\n            \"subject\": {\n                \"id\": 2\n            }\n        },\n        {\n            \"subject\": {\n                \"id\": 3\n            }\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -362,97 +362,6 @@
 							"path": [
 								"projnotas.api",
 								"subjectXUser"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": 1,\n    \"subject\": {\n        \"id\": 100\n    },\n    \"teachingInstitution\": {\n        \"id\": 1\n    },\n    \"user\": {\n        \"id\":1\n    },\n    \"grade\": 2,\n    \"semester\": 1,\n    \"year\": 2020\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subjectXUser",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"subjectXUser"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subjectXUser",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"subjectXUser"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Show",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subjectXUser/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"subjectXUser",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subjectXUser/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"projnotas.api",
-								"subjectXUser",
-								"1"
 							]
 						}
 					},
@@ -588,12 +497,12 @@
 					"response": []
 				},
 				{
-					"name": "Filter for students",
+					"name": "Student chooses subjects",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/projnotas.api/subject-student-filter/3",
+							"raw": "http://localhost:8080/projnotas.api/student-chooses-subjects/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -601,8 +510,8 @@
 							"port": "8080",
 							"path": [
 								"projnotas.api",
-								"subject-student-filter",
-								"3"
+								"student-chooses-subjects",
+								"1"
 							],
 							"query": [
 								{

@@ -1,10 +1,13 @@
 package models;
 
+import java.util.ArrayList;
+
 public class UserModel extends Model {
 	private String userName;
 	private String password;
 	private String type;
-	private TeachingInstitutionModel teachingInstitution; 
+	private TeachingInstitutionModel teachingInstitution;
+	private ArrayList<UserInstitutionModel> subjects = new ArrayList<UserInstitutionModel>();
 	
 	public String getUserName() {
 		return this.userName;
@@ -36,5 +39,13 @@ public class UserModel extends Model {
 
 	public void setTeachingInstitution(TeachingInstitutionModel teachingInstitution) {
 		this.teachingInstitution = teachingInstitution;
+	}
+
+	public ArrayList<UserInstitutionModel> getSubjects() {
+		return this.subjects;
+	}
+	
+	public void addSubject(UserInstitutionModel subject) {
+		this.subjects.add(subject);
 	}
 }

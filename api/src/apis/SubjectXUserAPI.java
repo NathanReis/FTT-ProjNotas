@@ -39,10 +39,10 @@ public class SubjectXUserAPI extends HttpServlet {
 			
 			if(parameters.isBlank()) {
 				
-				this.subjectXUserController.findAll(request, response);		
+				// this.subjectXUserController.findAll(request, response);		
 			} else if(parameters.matches("^\\d+$")) {
 				
-				this.subjectXUserController.findFirst("id", Integer.parseInt(parameters), request, response);
+				// this.subjectXUserController.findFirst("id", Integer.parseInt(parameters), request, response);
 			} else {
 				response
 					.getWriter()
@@ -65,7 +65,7 @@ public class SubjectXUserAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		this.subjectXUserController.create(request, response, SubjectXUserModel.class);
+		this.subjectXUserController.addSubjects(request, response);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class SubjectXUserAPI extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json");
 		
-		this.subjectXUserController.update(request, response, SubjectXUserModel.class);
+		// this.subjectXUserController.update(request, response, SubjectXUserModel.class);
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class SubjectXUserAPI extends HttpServlet {
 		}
 		
 		int id = Integer.parseInt(request.getRequestURI().replaceFirst(".*/subjectXUser/+", ""));
-		this.subjectXUserController.delete(id, request, response);
+		// this.subjectXUserController.delete(id, request, response);
 	}
 
 }
