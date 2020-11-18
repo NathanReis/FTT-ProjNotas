@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controllers.SubjectXUserController;
-import models.SubjectXUserModel;
 
 /**
  * Servlet implementation class SubjectXUserAPI
@@ -27,37 +26,6 @@ public class SubjectXUserAPI extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		try {
-			String parameters = request.getRequestURI().replaceFirst("^.*/subjectXUser/*", "");
-			
-			if(parameters.isBlank()) {
-				
-				// this.subjectXUserController.findAll(request, response);		
-			} else if(parameters.matches("^\\d+$")) {
-				
-				// this.subjectXUserController.findFirst("id", Integer.parseInt(parameters), request, response);
-			} else {
-				response
-					.getWriter()
-					.append("INVALID ROUTE GET");
-				
-				return;
-			}
-		} catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,17 +34,6 @@ public class SubjectXUserAPI extends HttpServlet {
 		response.setContentType("application/json");
 		
 		this.subjectXUserController.addSubjects(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		// this.subjectXUserController.update(request, response, SubjectXUserModel.class);
 	}
 
 	/**
@@ -99,5 +56,4 @@ public class SubjectXUserAPI extends HttpServlet {
 		int id = Integer.parseInt(request.getRequestURI().replaceFirst(".*/subjectXUser/+", ""));
 		// this.subjectXUserController.delete(id, request, response);
 	}
-
 }

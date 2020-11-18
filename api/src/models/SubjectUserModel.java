@@ -1,6 +1,6 @@
 package models;
 
-public class UserInstitutionModel {
+public class SubjectUserModel {
 	private SubjectModel subject;
 	private double grade;
 	private int semester;

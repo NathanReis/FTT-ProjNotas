@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.GregorianCalendar;
 
 import models.TeachingInstitutionModel;
-import models.UserInstitutionModel;
+import models.SubjectUserModel;
 import models.UserModel;
 import services.UserService;
 
@@ -110,9 +110,7 @@ public class UserRepository extends Repository<UserModel> {
 		GregorianCalendar calendar = new GregorianCalendar();
 		
 		int month = calendar.get(GregorianCalendar.MONTH);
-		System.out.println(month);
 		int year = calendar.get(GregorianCalendar.YEAR);
-		System.out.println(year);
 		int semester = 1;
 		
 		// Janeiro é 0
@@ -120,9 +118,8 @@ public class UserRepository extends Repository<UserModel> {
 		if(month > 5) {
 			semester = 2;
 		}
-		System.out.println(semester);
 		
-		for(UserInstitutionModel userInstitution : entity.getSubjects()) {
+		for(SubjectUserModel userInstitution : entity.getSubjects()) {
 			String sql = "DELETE FROM tbSubjectsXUsers ";
 			sql       += "WHERE ";
 			sql       += "  idSubject = ? AND ";

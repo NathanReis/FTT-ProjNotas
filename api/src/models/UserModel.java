@@ -7,7 +7,7 @@ public class UserModel extends Model {
 	private String password;
 	private String type;
 	private TeachingInstitutionModel teachingInstitution;
-	private ArrayList<UserInstitutionModel> subjects = new ArrayList<UserInstitutionModel>();
+	private ArrayList<SubjectUserModel> subjects = new ArrayList<SubjectUserModel>();
 	
 	public String getUserName() {
 		return this.userName;
@@ -41,11 +41,11 @@ public class UserModel extends Model {
 		this.teachingInstitution = teachingInstitution;
 	}
 
-	public ArrayList<UserInstitutionModel> getSubjects() {
+	public ArrayList<SubjectUserModel> getSubjects() {
 		return this.subjects;
 	}
 	
-	public void addSubject(UserInstitutionModel subject) {
+	public void addSubject(SubjectUserModel subject) {
 		this.subjects.add(subject);
 	}
 }
