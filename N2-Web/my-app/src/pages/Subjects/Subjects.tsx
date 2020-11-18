@@ -8,13 +8,16 @@ import User from '../../assets/user.png';
 import LoggedUser from '../../helpers/LoggedUser';
 import Logoff from '../../helpers/Logoff';
 import api from '../../services/api';
+import { useToasts } from 'react-toast-notifications'
 
 interface User {
+    id: number,
     userName: String,
     password: String,
     type: String,
     teachingInstitution: {
-        name: String;
+        name: String,
+        id: number,
     }
 }
 
@@ -23,13 +26,20 @@ interface Subject {
     description: string
 }
 
+interface SubjectInstitution {
+    subject: Subject,
+    active: string,
+}
+
 const Subjects = () => {
     const [user, setUser] = useState<User>();
     const [filter, setFilter] = useState<string>("");
     const [page, setPage] = useState<number>(1);
-    const [subjects, setSubjects] = useState<Subject[]>([]);
+    const [subjects, setSubjects] = useState<SubjectInstitution[]>([]);
     const [selectedSubjects, setSelectedSubjects] = useState<number[]>([]);
+
     const history = useHistory();
+    const { addToast } = useToasts();
 
     // const subjects = ['Fisica', 'Calculo', 'Algoritmos', 'LP']
 
@@ -45,18 +55,28 @@ const Subjects = () => {
             return;
         }
 
-        loadSubjects();
+        loadSubjects(1);
 
     }, []);
 
-    function loadSubjects() {
-        api.get(`subject-institution-filter?page=${page}&qtd=10`).then(response => {
+    function loadSubjects(pageNumber: number) {
+        const userJson = localStorage.getItem('@FTT:user');
+        let parsedUser;
+        if (userJson) {
+            parsedUser = JSON.parse(userJson);
+        }
+        api.get(`subjects-institution/${parsedUser?.teachingInstitution.id}?page=${pageNumber}&qtd=10`).then(response => {
             setSubjects(response.data);
         });
     }
 
     function loadSubjectsFilter() {
-        api.get(`subject-institution-filter?description=${filter}&qtd=10`).then(response => {
+        const userJson = localStorage.getItem('@FTT:user');
+        let parsedUser;
+        if (userJson) {
+            parsedUser = JSON.parse(userJson);
+        }
+        api.get(`subjects-institution/${parsedUser?.teachingInstitution.id}?description=${filter}&qtd=10`).then(response => {
             setSubjects(response.data);
         });
     }
@@ -79,16 +99,16 @@ const Subjects = () => {
 
     }
 
-    function prevPage(){
+    function prevPage() {
         if (page === 1) return;
         const pageNumber = page - 1;
         setPage(pageNumber);
-        loadSubjects();
+        loadSubjects(pageNumber);
     }
-    function nextPage(){
+    function nextPage() {
         const pageNumber = page + 1;
         setPage(pageNumber);
-        loadSubjects()
+        loadSubjects(pageNumber)
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -96,9 +116,36 @@ const Subjects = () => {
 
         setFilter(value);
     }
+    function addMessageToast() {
+        addToast('Matérias salvas com sucesso!', {
+            appearance: "success",
+            autoDismiss: true,
+        })
+    }
 
     function saveSubjects() {
-        console.log(selectedSubjects);
+
+        const arraySubjects: { subject: { id: number; }; }[] = [];
+        selectedSubjects.forEach(s => {
+            arraySubjects.push({
+                subject: {
+                    id: s,
+                }
+            });
+        });
+
+        const data = {
+            id: user?.id,
+            teachingInstitution: {
+                id: user?.teachingInstitution.id,
+            },
+            subjects: arraySubjects,
+        }
+
+        console.log(data);
+        api.post('subjectXUser', data);
+        addMessageToast();
+        history.push('/home');
     }
 
     return (
@@ -136,9 +183,10 @@ const Subjects = () => {
                         <tbody>
 
                             {subjects.map(subj =>
-                                <tr>
-                                    <td><input onChange={() => handleChange(subj.id)} type="checkbox"></input></td>
-                                    <td key={subj.id} >{subj.description}</td>
+                                subj.active === "A" &&
+                                <tr key={subj.subject.id} >
+                                    <td><input onChange={() => handleChange(subj.subject.id)} type="checkbox"></input></td>
+                                    <td >{subj.subject.description}</td>
                                 </tr>)}
 
                             {/* <tr>
@@ -163,7 +211,7 @@ const Subjects = () => {
                     </Table>
                 </Col>
                 <div className="page-container">
-                    <button onClick={prevPage} disabled={page===1} className="btn btn-info">Página anterior</button>
+                    <button onClick={prevPage} disabled={page === 1} className="btn btn-info">Página anterior</button>
                     <button onClick={nextPage} className="btn btn-info">Próxima página</button>
                 </div>
             </div>

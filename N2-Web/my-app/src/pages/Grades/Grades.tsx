@@ -19,8 +19,13 @@ interface User {
 }
 
 interface Subject {
-    id: number,
-    description: string
+    subject:{
+        description: string,
+        id:number,
+    },
+    grade:number,
+    semester:number,
+    year:number,
 }
 
 const Grades = () => {
@@ -45,18 +50,29 @@ const Grades = () => {
             return;
         }
 
-        // loadSubjects();
+        loadSubjects(1);
 
     }, []);
 
-    function loadSubjects() {
-        api.get(`subject-filter?page=${page}&qtd=10`).then(response => {
+    function loadSubjects(pageNumber: number) {
+        const userJson = localStorage.getItem('@FTT:user');
+        let parsedUser;
+        if (userJson) {
+            parsedUser = JSON.parse(userJson);
+        }
+        api.get(`subjects-user/${parsedUser?.id}?page=${pageNumber}&qtd=10`).then(response => {
             setSubjects(response.data);
+            console.log(response.data)
         });
     }
 
     function loadSubjectsFilter() {
-        api.get(`subject-filter?description=${filter}&qtd=10`).then(response => {
+        const userJson = localStorage.getItem('@FTT:user');
+        let parsedUser;
+        if (userJson) {
+            parsedUser = JSON.parse(userJson);
+        }
+        api.get(`subjects-user/${parsedUser?.id}?description=${filter}&qtd=10`).then(response => {
             setSubjects(response.data);
         });
     }
@@ -83,12 +99,12 @@ const Grades = () => {
         if (page === 1) return;
         const pageNumber = page - 1;
         setPage(pageNumber);
-        loadSubjects();
+        loadSubjects(pageNumber);
     }
     function nextPage(){
         const pageNumber = page + 1;
         setPage(pageNumber);
-        loadSubjects()
+        loadSubjects(pageNumber)
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -141,10 +157,10 @@ const Grades = () => {
                                     <td><input type="text" /></td>
                                 </tr>)} */}
 
-                                {subjects2.map(subj =>
+                                {subjects.map(subj =>
                                 <tr>
-                                    <td>{subj}</td>
-                                    <td><input type="number" min={0} max={10} /></td>
+                                    <td>{subj.subject.description}</td>
+                                    <td><input placeholder={subj.grade.toString()} type="number" min={0} max={10} /></td>
                                 </tr>)}
 
                             {/* <tr>

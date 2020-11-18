@@ -62,7 +62,7 @@ const SubjectsInstitutionEdit = () => {
         if (userJson) {
             parsedUser = JSON.parse(userJson);
         }
-        api.get(`subjects-institution/${parsedUser?.teachingInstitution.id}?page=${pageNumber}&qtd=10&idInstitution=${user?.id}`).then(response => {
+        api.get(`subjects-institution/${parsedUser?.teachingInstitution.id}?page=${pageNumber}&qtd=10`).then(response => {
             setSubjects(response.data);
             console.log(page)
         });
@@ -74,7 +74,7 @@ const SubjectsInstitutionEdit = () => {
         if (userJson) {
             parsedUser = JSON.parse(userJson);
         }
-        api.get(`subjects-institution/${parsedUser?.teachingInstitution.id}?description=${filter}&qtd=10&idInstitution=${user?.id}`).then(response => {
+        api.get(`subjects-institution/${parsedUser?.teachingInstitution.id}?description=${filter}&qtd=10`).then(response => {
             setSubjects(response.data);
         });
     }
@@ -127,35 +127,7 @@ const SubjectsInstitutionEdit = () => {
         console.log(event.target);
     }
 
-    function saveSubjects() {
-        // if(selectedSubjects.length === 0){
-        //     history.push('/home');
-        //     return;
-        // }
-
-        // const subjs: { subject: { id: number; description: string; }; active: string; }[] =[];
-
-        // selectedSubjects.forEach(s => {
-        //     subjs.push({
-        //         subject: {
-        //             id: s,
-        //             description: "",
-        //         }  ,
-        //         active: "",              
-        //     });
-        // });
-
-        // const data = {
-        //     id: user?.id,
-        //     name: user?.userName,
-        //     subjects: subjs,
-        // };
-
-        // console.log(data);
-
-
-        console.log(subjects);
-    }
+    
 
     return (
         <div id="subjects-container">
@@ -168,7 +140,6 @@ const SubjectsInstitutionEdit = () => {
                     <Link to="/edit-institution">Editar conta</Link>
                     <button onClick={handleLogoff} className="button-custom">Logoff</button>
                     <br></br>
-                    <button onClick={saveSubjects} className="btn btn-info">Salvar matérias</button>
                 </div>
             </div>
             <div className="main-container">
