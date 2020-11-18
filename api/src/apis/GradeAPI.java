@@ -55,7 +55,7 @@ public class GradeAPI extends HttpServlet {
 		response.setContentType("application/json");
 		
 		try {
-			
+
 			this.gradeController.update(request, response, GradeIdUserModel.class);
 			
 		}catch(Exception exception) {
