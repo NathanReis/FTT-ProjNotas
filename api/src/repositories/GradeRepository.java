@@ -38,9 +38,9 @@ public class GradeRepository extends Repository<GradeIdUserModel>{
 			try (PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)){
 				
 				stmt.setDouble(1, grade.getGrade());
-				stmt.setInt(3, entity.getIdTeachingInstitution());
-				stmt.setInt(2, grade.getIdSubject());
-				stmt.setInt(3, entity.getIdUser());
+				stmt.setInt(2, entity.getIdTeachingInstitution());
+				stmt.setInt(3, grade.getIdSubject());
+				stmt.setInt(4, entity.getIdUser());
 				stmt.executeUpdate();
 			}
 		}
