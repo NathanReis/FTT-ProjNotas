@@ -1,11 +1,8 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import helpers.JsonHelper;
 import models.ErrorModel;
 import models.GradeIdUserModel;

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import models.AverageGradeSModel;
 import models.GraphicSearchUserModel;
-import models.Model;
 
 public class GraphicSearchUserRepository extends Repository<GraphicSearchUserModel>{
 
@@ -34,7 +33,6 @@ public class GraphicSearchUserRepository extends Repository<GraphicSearchUserMod
 	}
 
 	public AverageGradeSModel averageGradeS(GraphicSearchUserModel model) throws SQLException, ClassNotFoundException{
-		AverageGradeSModel grade = new AverageGradeSModel();
 		
 		double userGrade = this.gradeUser(model);
 		double institutionGrade = this.gradeInstitution(model); 
@@ -66,8 +64,6 @@ public class GraphicSearchUserRepository extends Repository<GraphicSearchUserMod
 			stmt.setInt(4, model.getSemester());
 			stmt.setInt(5, model.getYear());
 			
-			stmt.executeUpdate();
-			
 			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.next()) {
@@ -93,8 +89,6 @@ public class GraphicSearchUserRepository extends Repository<GraphicSearchUserMod
 			stmt.setInt(3, model.getSemester());
 			stmt.setInt(4, model.getYear());
 			
-			stmt.executeUpdate();
-			
 			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.next()) {
@@ -119,8 +113,6 @@ public class GraphicSearchUserRepository extends Repository<GraphicSearchUserMod
 			stmt.setInt(2, model.getIdSubject());
 			stmt.setInt(3, model.getSemester());
 			stmt.setInt(4, model.getYear());
-			
-			stmt.executeUpdate();
 			
 			ResultSet rs = stmt.executeQuery();
 			
