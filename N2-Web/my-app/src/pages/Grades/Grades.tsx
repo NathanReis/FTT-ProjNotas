@@ -17,6 +17,7 @@ interface User {
     password: String,
     type: String,
     teachingInstitution: {
+        id:number,
         name: String;
     }
 }
@@ -72,7 +73,6 @@ const Grades = () => {
         }
         api.get(`subjects-user/${parsedUser?.id}?page=${pageNumber}&qtd=10`).then(response => {
             setSubjects(response.data);
-            console.log(response.data)
         });
     }
 
@@ -130,7 +130,8 @@ const Grades = () => {
         try {
             const data = {
                 idUser: user?.id,
-                subjectGrade: subjectsGrade
+                idTeachingInstitution: user?.teachingInstitution.id,
+                subjectGrade: subjectsGrade,
             }
             let hasError:Boolean = false;
             data.subjectGrade.map(async grade => {
@@ -143,8 +144,7 @@ const Grades = () => {
             if(hasError){
                 return;
             }
-
-            await api.put('GradeAPI', data);
+            const resp = await api.put('GradeAPI', data);
 
             addMessageToast();
 

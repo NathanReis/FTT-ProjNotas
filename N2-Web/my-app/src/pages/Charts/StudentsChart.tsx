@@ -23,8 +23,15 @@ interface User {
     password: String,
     type: String,
     teachingInstitution: {
+        id:number,
         name: String;
     }
+}
+
+interface Grades{
+    grade:number,
+    averageInstitution:number,
+    averageOther:number,
 }
 
 const StudentsChart = () => {
@@ -38,12 +45,13 @@ const StudentsChart = () => {
 
     
 
-    function chart() {
+    function chart(grades:Grades) {
+        const array = [grades.grade, grades.averageInstitution, grades.averageOther];
         setChartData({
             labels: ['Sua média', 'Média da sua instituição', 'Média das outras instituições'],
             datasets: [{
                 label: 'Nota ',
-                data: [8, 7, 6],
+                data: array,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -74,13 +82,24 @@ const StudentsChart = () => {
         history.push('/');
     }
 
-    function handleSelectInstitution(event: ChangeEvent<HTMLSelectElement>) {
-        const inst = event.target.value;
-        setSelectedSubject(Number(inst));
-        console.log(selectedSubject)
+    async function handleSelectSubject(event: ChangeEvent<HTMLSelectElement>) {
+        const idSubj = event.target.value;
+        setSelectedSubject(Number(idSubj));
+
+        const data = {
+            idUser: user?.id,
+            idSubject: idSubj,
+            idTeachingInstitution: user?.teachingInstitution.id,
+            semester: 2,
+            year: 2020,
+        }
+        console.log(data)
+
+        const resp = await api.post('/GraphicSearchUserAPI',data);
+        chart(resp.data);
     }
     useEffect(() => {
-        chart();
+        // chart();
         const user = localStorage.getItem('@FTT:user');
         let parsedUser;
         if (user) {
@@ -114,18 +133,18 @@ const StudentsChart = () => {
             </div>
             <div className="bar">
                 <div className="selects">
-                    <select name="subjects" id="subjects" value={selectedSubject} onChange={handleSelectInstitution} className="select">
+                    <select name="subjects" id="subjects" value={selectedSubject} onChange={handleSelectSubject} className="select">
                         <option value="0">Escolha a matéria</option>
                         {userSubjects.map(subj => (
                             <option key={subj.subject.id} value={subj.subject.id} >{subj.subject.description}</option>
                         ))}
                     </select>
-                    <select name="subjects" id="subjects" value={selectedSubject} onChange={handleSelectInstitution} className="select">
+                    <select name="subjects" id="subjects"  className="select">
                         {/* <option value="0">Escolha o semestre</option> */}
                         <option value="2">2</option>
                         
                     </select>
-                    <select name="subjects" id="subjects" value={selectedSubject} onChange={handleSelectInstitution} className="select">
+                    <select name="subjects" id="subjects"  className="select">
                         {/* <option value="0">Escolha o ano</option> */}
                         <option value="2020">2020</option>
                     </select>
