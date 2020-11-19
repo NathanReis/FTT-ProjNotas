@@ -8,8 +8,11 @@ import User from '../../assets/user.png';
 import LoggedUser from '../../helpers/LoggedUser';
 import Logoff from '../../helpers/Logoff';
 import api from '../../services/api';
+import { ToastProvider, useToasts } from 'react-toast-notifications'
+import * as Yup from 'yup';
 
 interface User {
+    id: number,
     userName: String,
     password: String,
     type: String,
@@ -18,22 +21,29 @@ interface User {
     }
 }
 
+interface Grades {
+    idSubject: number,
+    grade: number
+}
+
 interface Subject {
-    subject:{
+    subject: {
         description: string,
-        id:number,
+        id: number,
     },
-    grade:number,
-    semester:number,
-    year:number,
+    grade: number,
+    semester: number,
+    year: number,
 }
 
 const Grades = () => {
+    const { addToast } = useToasts();
+
     const [user, setUser] = useState<User>();
     const [filter, setFilter] = useState<string>("");
     const [page, setPage] = useState<number>(1);
     const [subjects, setSubjects] = useState<Subject[]>([]);
-    const [selectedSubjects, setSelectedSubjects] = useState<number[]>([]);
+    const [subjectsGrade, setSubjectsGrade] = useState<Grades[]>([]);
     const history = useHistory();
 
     const subjects2 = ['Fisica', 'Calculo', 'Algoritmos', 'LP']
@@ -82,26 +92,13 @@ const Grades = () => {
         history.push('/');
     }
 
-    function handleChange(id: number) {
-
-        const findedId = selectedSubjects.findIndex(subjId => subjId === id);
-        if (findedId < 0) {
-            setSelectedSubjects(selectedSubjects => [...selectedSubjects, id]);
-
-        }
-        else {
-            setSelectedSubjects(selectedSubjects.filter(subjId => subjId !== id));
-        }
-
-    }
-
-    function prevPage(){
+    function prevPage() {
         if (page === 1) return;
         const pageNumber = page - 1;
         setPage(pageNumber);
         loadSubjects(pageNumber);
     }
-    function nextPage(){
+    function nextPage() {
         const pageNumber = page + 1;
         setPage(pageNumber);
         loadSubjects(pageNumber)
@@ -113,8 +110,61 @@ const Grades = () => {
         setFilter(value);
     }
 
-    function saveSubjects() {
-        console.log(selectedSubjects);
+    async function handleInputGradeChange(event: ChangeEvent<HTMLInputElement>) {
+        const { name, value } = event.target;
+
+        const data: Grades = {
+            idSubject: Number(name),
+            grade: Number(value)
+        }
+
+        const findedId = subjectsGrade.findIndex(subjId => subjId.idSubject === Number(name));
+        if (findedId >= 0) {
+            setSubjectsGrade(subjectsGrade.filter(subjId => subjId.idSubject !== Number(name)));
+
+        }
+        setSubjectsGrade(subjectsGrade => [...subjectsGrade, data]);
+    }
+
+    async function saveSubjects() {
+        try {
+            const data = {
+                idUser: user?.id,
+                subjectGrade: subjectsGrade
+            }
+            let hasError:Boolean = false;
+            data.subjectGrade.map(async grade => {
+                if(grade.grade < 0 || grade.grade > 10){
+                    addMessageToastError("Nota deve estar entre 0 e 10");
+                    hasError = true;
+                    return;
+                }
+            });
+            if(hasError){
+                return;
+            }
+
+            await api.put('GradeAPI', data);
+
+            addMessageToast();
+
+            history.push('/home');
+        } catch (error) {
+            addMessageToastError(error.message);
+        }
+    }
+
+    function addMessageToast() {
+        addToast('Notas salvas com sucesso!', {
+            appearance: "success",
+            autoDismiss: true,
+        })
+    }
+    function addMessageToastError(message: string) {
+        addToast(message, {
+            appearance: "error",
+            autoDismiss: true,
+        })
     }
 
     return (
@@ -149,43 +199,16 @@ const Grades = () => {
                             </tr>
                         </thead>
                         <tbody>
-
-                            {/* {subjects2.map(subj =>
-                                <tr>
-                                    <td><input onChange={() => handleChange(subj.id)} type="checkbox"></input></td>
-                                    <td key={subj.id} >{subj.description}</td>
-                                    <td><input type="text" /></td>
-                                </tr>)} */}
-
-                                {subjects.map(subj =>
+                            {subjects.map(subj =>
                                 <tr>
                                     <td>{subj.subject.description}</td>
-                                    <td><input placeholder={subj.grade.toString()} type="number" min={0} max={10} /></td>
+                                    <td><input name={subj.subject.id.toString()} placeholder={subj.grade.toString()} onChange={handleInputGradeChange} type="number" min={0} max={10} /></td>
                                 </tr>)}
-
-                            {/* <tr>
-                                <td><input type="checkbox"></input></td>
-                                <td>Cálculo 1</td>
-                                <td>Semestre 1</td>
-                                <td>EC</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></input></td>
-                                <td>Cálculo 2</td>
-                                <td>Semestre 2</td>
-                                <td>EC</td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></input></td>
-                                <td>Linguagem de programação 3</td>
-                                <td>Semestre 7</td>
-                                <td>EC</td>
-                            </tr> */}
                         </tbody>
                     </Table>
                 </Col>
                 <div className="page-container">
-                    <button onClick={prevPage} disabled={page===1} className="btn btn-info">Página anterior</button>
+                    <button onClick={prevPage} disabled={page === 1} className="btn btn-info">Página anterior</button>
                     <button onClick={nextPage} className="btn btn-info">Próxima página</button>
                 </div>
             </div>
