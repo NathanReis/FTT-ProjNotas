@@ -29,16 +29,18 @@ public class GradeRepository extends Repository<GradeIdUserModel>{
 		for(GradeIdSubjectModel grade: entity.getSubjectGrade()) {
 			String sql = "UPDATE " + this.table + " ";
 			sql       += "SET ";
-			sql       += "  grade = ?";
+			sql       += "  grade = ? ";
 			sql       += "WHERE ";
+			sql       += "  idTeachingInstitution = ? AND ";
 			sql       += "  idSubject = ? AND ";
 			sql       += "  idUser = ? ;";
 			
 			try (PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)){
 				
 				stmt.setDouble(1, grade.getGrade());
+				stmt.setInt(3, entity.getIdTeachingInstitution());
 				stmt.setInt(2, grade.getIdSubject());
-				
+				stmt.setInt(3, entity.getIdUser());
 				stmt.executeUpdate();
 			}
 		}

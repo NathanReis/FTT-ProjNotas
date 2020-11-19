@@ -18,6 +18,7 @@ public class GradeController extends Controller<GradeIdUserModel>{
 		try {
 			String stringJson = JsonHelper.getJsonRequest(request);
 			GradeIdUserModel model = this.gson.fromJson(stringJson, classType);
+			
 			this.repository.update(model);
 			
 			ConnectionDB.closeInstance();
