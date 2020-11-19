@@ -93,8 +93,7 @@ const StudentsChart = () => {
             semester: 2,
             year: 2020,
         }
-        console.log(data)
-
+        
         const resp = await api.post('/GraphicSearchUserAPI',data);
         chart(resp.data);
     }

@@ -33,8 +33,14 @@ interface User {
     password: String,
     type: String,
     teachingInstitution: {
+        id:number,
         name: String;
     }
+}
+
+interface Grades{
+    averageTeachingInstitution:number,
+    averageOther:number,
 }
 
 const StudentsChart = () => {
@@ -46,12 +52,14 @@ const StudentsChart = () => {
 
     const history = useHistory();
 
-    function chart() {
+    function chart(grades:Grades) {
+        const array = [ grades.averageTeachingInstitution, grades.averageOther];
+
         setChartData({
             labels: ['Média da sua instituição', 'Média das outras instituições'],
             datasets: [{
                 label: 'Nota ',
-                data: [8, 7],
+                data: array,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -82,13 +90,22 @@ const StudentsChart = () => {
         history.push('/');
     }
 
-    function handleSelectInstitution(event: ChangeEvent<HTMLSelectElement>) {
-        const inst = event.target.value;
-        setSelectedSubject(Number(inst));
-        console.log(selectedSubject)
+    async function handleSelectInstitution(event: ChangeEvent<HTMLSelectElement>) {
+        const idSubj = event.target.value;
+        setSelectedSubject(Number(idSubj));
+
+        const data = {
+            idTeachingInstitution: user?.teachingInstitution.id,
+            idSubject: idSubj,
+            semester: 2,
+            year: 2020,
+        }
+        
+        const resp = await api.post('/GraphicSearchInstitutionAPI',data);
+        console.log(resp)
+        chart(resp.data);
     }
     useEffect(() => {
-        chart();
         const user = localStorage.getItem('@FTT:user');
         let parsedUser;
         if (user) {
