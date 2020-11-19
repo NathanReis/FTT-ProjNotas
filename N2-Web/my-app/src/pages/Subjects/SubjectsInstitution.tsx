@@ -146,7 +146,7 @@ const SubjectsInstitution = () => {
             <div className="side-menu">
                 <div className="side-container">
                     <img alt="user" src={User} />
-                    <h4>Bem vindo {user?.userName}</h4>
+                    <h5>Bem vindo {user?.userName}</h5>
                     <Link to="/home">Home</Link>
                     <Link to="/institution-chart">Ver médias</Link>
                     <Link to="/edit-institution">Editar conta</Link>

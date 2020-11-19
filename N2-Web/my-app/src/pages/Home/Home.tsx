@@ -19,10 +19,7 @@ const Home = () => {
     const [user, setUser] = useState<User>();
     const history = useHistory();
 
-    // useEffect(() => {
-    //     const user = LoggedUser;
-    //     setUser(user);
-    // }, []);
+   
 
     useEffect(() => {
         const user = localStorage.getItem('@FTT:user');
@@ -51,7 +48,7 @@ const Home = () => {
             <div className="side-menu">
                 <div className="side-container">
                     <img alt="user" src={User} />
-                    <h2>Bem vindo {user?.userName}</h2>
+                    <h3>Bem vindo {user?.userName}</h3>
                     <Link to="/subjects">Escolher matérias</Link>
                     <Link to="/student-grades">Cadastrar notas</Link>
                     <Link to="/student-chart">Ver médias</Link>

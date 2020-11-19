@@ -48,7 +48,7 @@ const HomeInstitution = () => {
             <div className="side-menu">
                 <div className="side-container">
                     <img alt="user" src={UserImg} />
-                    <h2>Bem vindo {user?.userName}</h2>
+                    <h3>Bem vindo {user?.userName}</h3>
                     <Link to="/subjects-institution">Escolher matérias</Link>
                     <Link to="/subjects-institution-edit">Editar matérias escolhidas</Link>
                     <Link to="/institution-chart">Ver médias dos alunos</Link>
@@ -58,7 +58,6 @@ const HomeInstitution = () => {
             </div>
             <div className="home-container">
                 <h1>Projeto notas</h1>
-                <p>(precisamos pensar em um nome melhor)</p>
                 <div className="image-container">
                     <img src={HomeImage} />
                     <ul>
