@@ -47,9 +47,4 @@ public class GradeRepository extends Repository<GradeIdUserModel>{
 			}
 		}
 	}
-	
-	public ArrayList<GradeIdUserModel> findAll(int idUser){
-		return null;
-	}
-	
 }

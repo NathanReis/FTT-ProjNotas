@@ -16,33 +16,7 @@ public class GradeController extends Controller<GradeIdUserModel>{
 	public GradeController() {
 		super (new GradeRepository());
 	}
-	
-	public void findAll(HttpServletRequest request, HttpServletResponse response,Class<GradeIdUserModel> classType) throws Exception {
-		
-		String stringJson = JsonHelper.getJsonRequest(request);
-		GradeIdUserModel model = this.gson.fromJson(stringJson, classType);
-		
-		ArrayList<GradeIdUserModel> gradeModel = null;
-		
-		try {
-			gradeModel = ((GradeRepository)this.repository).findAll(model.getIdUser());
 			
-			ConnectionDB.closeInstance();
-			
-			response
-				.getWriter()
-				.append(this.gson.toJson(gradeModel));
-		} catch(Exception exception) {
-			ErrorModel error = new ErrorModel();
-			error.setHasError(true);
-			error.setMessageError(exception.getMessage());
-			
-			response
-				.getWriter()
-				.append(this.gson.toJson(error));
-		}
-	}
-	
 	public void update(HttpServletRequest request, HttpServletResponse response, Class<GradeIdUserModel> classType) throws IOException {
 		try {
 			String stringJson = JsonHelper.getJsonRequest(request);

@@ -28,25 +28,6 @@ public class GradeAPI extends HttpServlet {
     }
     
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json");
-		
-		try {
-			
-			this.gradeController.findAll(request, response, GradeIdUserModel.class);
-			
-		}catch(Exception exception) {
-			response
-				.getWriter()
-				.append(exception.getMessage());
-		}
-	}
-
-	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
