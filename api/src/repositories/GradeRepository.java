@@ -31,7 +31,8 @@ public class GradeRepository extends Repository<GradeIdUserModel>{
 			sql       += "SET ";
 			sql       += "  grade = ?";
 			sql       += "WHERE ";
-			sql       += "  idSubject = ?";
+			sql       += "  idSubject = ? AND ";
+			sql       += "  idUser = ? ;";
 			
 			try (PreparedStatement stmt = ConnectionDB.getInstance().prepareStatement(sql)){
 				
